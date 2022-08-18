@@ -3,6 +3,8 @@ using ToDoApp.Client.Components;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 using System.Reflection;
+using Microsoft.AspNetCore.Components.Forms;
+using System;
 
 namespace ToDoApp.Client.Pages;
 
@@ -16,7 +18,13 @@ public partial class NewToDo
 
     private ToDoModel Model { get; set; } = new ToDoModel();
 
-    public List<ToDoModel> ToDos { get; set; } = new List<ToDoModel>();
+    private List<ToDoModel> ToDos { get; set; } = new List<ToDoModel>();
+
+    private EditContext? EditContext { get; set; }
+
+    private bool IsModified { get; set; }
+
+    private bool ShowCancelPopup { get; set; }
 
     #endregion //Private Properties 
 
@@ -35,14 +43,32 @@ public partial class NewToDo
         if (ToDoId > 0)
         {
             Model = ToDos.Find(x => x.Id == ToDoId);
+            EditContext = new EditContext(Model);
+            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
         }
         else
         {
             Model = new ToDoModel();
             Model.DueDate = DateTime.Now;
+            EditContext = new EditContext(Model);
+            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
         }
 
         await base.OnInitializedAsync();
+    }
+
+    // Note: The OnFieldChanged event is raised for each field in the model
+    private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        Console.WriteLine(e.FieldIdentifier.FieldName);
+        if (ToDoId > 0 && !string.IsNullOrEmpty(e.FieldIdentifier.FieldName))
+        {
+            IsModified = true;
+        }
+        else
+        {
+            IsModified = false;
+        }
     }
 
     private async Task Save()
@@ -62,7 +88,17 @@ public partial class NewToDo
 
     private void Cancel()
     {
-        NavigationManager?.NavigateTo("/");
+        Console.WriteLine(IsModified);
+        if (!IsModified)
+        {
+            NavigationManager?.NavigateTo("/");
+            ShowCancelPopup = false;
+        }
+        else
+        {
+            ShowCancelPopup = true;
+        }
     }
+
     #endregion //Private Methods
 }

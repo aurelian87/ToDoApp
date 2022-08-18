@@ -12,12 +12,6 @@ a, .btn-link {
     color: #0071c1;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
 .content {
     padding-top: 1.1rem;
 }
@@ -70,15 +64,34 @@ tr.active {
 tr.past-duedate {
     background-color: #6e6e6e;
     color: #fff;
-    animation: test 2s ease-in-out infinite;
+    animation: pulse 2s ease-in-out infinite;
 }
 
 td {
     vertical-align: middle;
 }
 
-@keyframes test {
+@keyframes pulse {
     50% {
         opacity: 0.8;
     }
+}
+
+.cancel-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cancel-modal_container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
 }
