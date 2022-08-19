@@ -88,10 +88,12 @@ td {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px;
 }
 
 .cancel-modal_container {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
+    max-width: 500px;
 }

@@ -21,7 +21,7 @@ else
         </div>
         <div class="mb-3">
             <label for="Description" class="form-label">Description</label>
-            <InputText id="Description" class="form-control" @bind-Value="Model.Description" />
+            <InputText id="Description" class="form-control" @bind-Value="Model.Description" v />
             <ValidationMessage For="(() => Model.Description)" />
         </div>
         <div class="mb-3">
@@ -41,14 +41,14 @@ else
 @if (ShowCancelPopup)
 {
     <div class="cancel-modal">
-        <div class="cancel-modal_container">
-            <p>The form has been modified!</p>
+        <div class="cancel-modal_container text-center">
+            <p>You have chosen to leave the form and you will lose your unsaved data. Select Yes to save your changes and leave, No to cancel your changes and leave.</p>
             <div class="row gx-2 justify-content-center">
                 <div class="col-auto py-2">
-                    <button type="button" class="btn btn-primary" @onclick="Save">Save</button>
+                    <button type="button" class="btn btn-primary" @onclick="Save">Yes</button>
                 </div>
                 <div class="col-auto py-2">
-                    <a href="" class="btn btn-danger">Cancel</a>
+                    <a href="" class="btn btn-danger">No</a>
                 </div>
             </div>
         </div>
