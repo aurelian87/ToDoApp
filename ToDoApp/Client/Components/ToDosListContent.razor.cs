@@ -35,8 +35,6 @@ public partial class ToDosListContent
             SelectedToDoId = ToDos[0].Id;
         }
 
-        todo.DueDate = DateTime.Now;
-
         await base.OnInitializedAsync();
     }
 
@@ -72,7 +70,7 @@ public partial class ToDosListContent
 
     private void Edit(int id)
     {
-        NavigationManager.NavigateTo($"toDos/{id}");
+        NavigationManager?.NavigateTo($"toDos/{id}");
     }
 
 
