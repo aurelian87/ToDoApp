@@ -62,7 +62,7 @@ tr.active {
 }
 
 tr.past-duedate {
-    background-color: #6e6e6e;
+    background-color: #5c5c5c;
     color: #fff;
     animation: pulse 2s ease-in-out infinite;
 }
@@ -73,7 +73,8 @@ td {
 
 @keyframes pulse {
     50% {
-        opacity: 0.8;
+        /*opacity: 0.8;*/
+        background-color: #a5a3a3;
     }
 }
 
