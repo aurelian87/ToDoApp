@@ -139,7 +139,6 @@ public partial class AddToDo
         Model.Description = _modelClone.Description;
         Model.DueDate = _modelClone.DueDate;
 
-
         NavigationManager?.NavigateTo("/todos");
     }
 
