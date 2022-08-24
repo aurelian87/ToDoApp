@@ -67,9 +67,6 @@ public partial class AddToDo
             Model.DueDate = DateTime.Now;
             EditContext = new EditContext(Model);
             EditContext.OnFieldChanged += EditContext_OnFieldChanged;
-
-            Console.WriteLine($"Model Id: {Model.Id}");
-            Console.WriteLine($"ToDoId: {ToDoId}");
         }
 
         await base.OnInitializedAsync();
@@ -78,7 +75,6 @@ public partial class AddToDo
     // Note: The OnFieldChanged event is raised for each field in the model
     private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
     {
-        //Console.WriteLine(e.FieldIdentifier.FieldName);
         if (ToDoId > 0 && !string.IsNullOrEmpty(e.FieldIdentifier.FieldName))
         {
             IsModified = true;
@@ -93,7 +89,22 @@ public partial class AddToDo
     {
         if (Model.Id == 0)
         {
-            Model.Id = ToDos.ToDosList.Count + 1;
+            if (ToDos.ToDosList.Count == 0)
+            {
+                Model.Id = 1;
+            }
+            else
+            {
+                var max = 0;
+                foreach (var item in ToDos.ToDosList)
+                {
+                    if (item.Id > max)
+                    {
+                        max = item.Id;
+                    }
+                }
+                Model.Id = max + 1;
+            }
             ToDos.ToDosList.Add(Model);
         }
         NavigationManager?.NavigateTo("/todos");
@@ -101,15 +112,25 @@ public partial class AddToDo
 
     private void Cancel()
     {
-        if (!IsModified)
-        {
-            NavigationManager?.NavigateTo("/todos");
-            ShowCancelPopup = false;
-        }
-        else
+        if (Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate)
         {
             ShowCancelPopup = true;
         }
+        else
+        {
+            NavigationManager?.NavigateTo("/todos");
+            //ShowCancelPopup = false;
+        }
+
+        //if (!IsModified)
+        //{
+        //    NavigationManager?.NavigateTo("/todos");
+        //    ShowCancelPopup = false;
+        //}
+        //else
+        //{
+        //    ShowCancelPopup = true;
+        //}
     }
 
     private void Reset()
@@ -117,6 +138,8 @@ public partial class AddToDo
         Model.Title = _modelClone.Title;
         Model.Description = _modelClone.Description;
         Model.DueDate = _modelClone.DueDate;
+
+
         NavigationManager?.NavigateTo("/todos");
     }
 
