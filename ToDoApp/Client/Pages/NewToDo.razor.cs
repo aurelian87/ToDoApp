@@ -7,13 +7,38 @@ namespace ToDoApp.Client.Pages;
 
 public partial class NewToDo
 {
+    #region Private Fields
+
+    private ToDoModel _model;
+
+    private ToDoModel _modelClone;
+
+    #endregion //Private Fields
+
     #region Private Properties
 
     [Inject] private HttpClient Http { get; set; }
 
     [Inject] protected NavigationManager? NavigationManager { get; set; }
 
-    private ToDoModel Model { get; set; } = new ToDoModel();
+    private ToDoModel Model
+    {
+        get
+        {
+            return _model;
+        }
+        set
+        {
+            _model = value;
+            _modelClone = new ToDoModel
+            {
+                Id = value.Id,
+                Title = value.Title,
+                Description = value.Description,
+                DueDate = value.DueDate
+            };
+        }
+    }
 
     private List<ToDoModel> ToDos { get; set; } = new List<ToDoModel>();
 
@@ -40,31 +65,15 @@ public partial class NewToDo
         if (ToDoId > 0)
         {
             Model = ToDos.Find(x => x.Id == ToDoId);
-            EditContext = new EditContext(Model);
-            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
         }
         else
         {
             Model = new ToDoModel();
             Model.DueDate = DateTime.Now;
-            EditContext = new EditContext(Model);
-            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+            _modelClone.DueDate = DateTime.Now;
         }
 
         await base.OnInitializedAsync();
-    }
-
-    // Note: The OnFieldChanged event is raised for each field in the model
-    private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-        if (ToDoId > 0 && !string.IsNullOrEmpty(e.FieldIdentifier.FieldName))
-        {
-            IsModified = true;
-        }
-        else
-        {
-            IsModified = false;
-        }
     }
 
     private async Task Save()
@@ -84,15 +93,22 @@ public partial class NewToDo
 
     private void Cancel()
     {
-        if (!IsModified)
-        {
-            NavigationManager?.NavigateTo("/");
-            ShowCancelPopup = false;
-        }
-        else
+        if ((Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate))
         {
             ShowCancelPopup = true;
         }
+        else
+        {
+            NavigationManager?.NavigateTo("/");
+        }
+    }
+    private void Reset()
+    {
+        Model.Title = _modelClone.Title;
+        Model.Description = _modelClone.Description;
+        Model.DueDate = _modelClone.DueDate;
+
+        NavigationManager?.NavigateTo("/");
     }
 
     #endregion //Private Methods

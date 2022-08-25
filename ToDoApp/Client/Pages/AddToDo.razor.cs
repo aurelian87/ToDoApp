@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
 using ToDoApp.Shared.Models;
+using System.Reflection;
 
 namespace ToDoApp.Client.Pages;
 
@@ -112,6 +113,7 @@ public partial class AddToDo
 
     private void Cancel()
     {
+        //if (!MatchObject(Model, _modelClone))
         if (Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate)
         {
             ShowCancelPopup = true;
@@ -140,6 +142,26 @@ public partial class AddToDo
         Model.DueDate = _modelClone.DueDate;
 
         NavigationManager?.NavigateTo("/todos");
+    }
+
+    protected bool MatchObject(object newObj, object oldObj)
+    {
+        Type currentType = newObj.GetType();
+        PropertyInfo[] props = currentType.GetProperties();
+
+        bool isSameObject = true;
+        foreach (var prop in props)
+        {
+            var i = prop.GetValue(newObj);
+            var f = prop.GetValue(oldObj);
+            if (!object.Equals(i, f))
+            {
+                isSameObject = false;
+                break;
+            }
+        }
+
+        return isSameObject;
     }
 
     #endregion //Private Methods

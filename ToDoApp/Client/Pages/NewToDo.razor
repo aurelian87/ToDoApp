@@ -1,6 +1,7 @@
 ﻿@page "/toDos/{ToDoId:int}"
 
-@if(ToDoId > 0){
+@if (ToDoId > 0)
+{
     <PageTitle>ToDo - Edit</PageTitle>
     <h3>Edit ToDo</h3>
 }
@@ -9,10 +10,9 @@ else
     <PageTitle>ToDo - Add</PageTitle>
     <h3>Add ToDo</h3>
 }
-
-@if (EditContext != null)
+@if (Model != null)
 {
-    <EditForm EditContext="EditContext" OnValidSubmit="Save">
+    <EditForm Model="Model" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <div class="mb-3">
             <label for="Title" class="form-label">Title</label>
@@ -48,7 +48,7 @@ else
                     <button type="button" class="btn btn-primary" @onclick="Save">Yes</button>
                 </div>
                 <div class="col-auto py-2">
-                    <a href="" class="btn btn-danger">No</a>
+                    <button type="button" class="btn btn-danger" @onclick="Reset">No</button>
                 </div>
             </div>
         </div>
