@@ -1,7 +1,6 @@
 ﻿using ToDoApp.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace ToDoApp.Client.Pages;
 
@@ -42,10 +41,6 @@ public partial class NewToDo
 
     private List<ToDoModel> ToDos { get; set; } = new List<ToDoModel>();
 
-    private EditContext? EditContext { get; set; }
-
-    private bool IsModified { get; set; }
-
     private bool ShowCancelPopup { get; set; }
 
     #endregion //Private Properties 
@@ -70,7 +65,7 @@ public partial class NewToDo
         {
             Model = new ToDoModel();
             Model.DueDate = DateTime.Now;
-            _modelClone.DueDate = DateTime.Now;
+            _modelClone.DueDate = Model.DueDate;
         }
 
         await base.OnInitializedAsync();
@@ -93,7 +88,7 @@ public partial class NewToDo
 
     private void Cancel()
     {
-        if ((Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate))
+        if (Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate)
         {
             ShowCancelPopup = true;
         }

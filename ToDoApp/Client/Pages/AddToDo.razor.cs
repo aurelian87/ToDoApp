@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using ToDoApp.Shared.Models;
 using System.Reflection;
+using Microsoft.VisualBasic;
 
 namespace ToDoApp.Client.Pages;
 
@@ -59,15 +60,16 @@ public partial class AddToDo
         if (ToDoId > 0)
         {
             Model = ToDos.ToDosList.Find(x => x.Id == ToDoId);
-            EditContext = new EditContext(Model);
-            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+            //EditContext = new EditContext(Model);
+            //EditContext.OnFieldChanged += EditContext_OnFieldChanged;
         }
         else
         {
             Model = new ToDoModel();
             Model.DueDate = DateTime.Now;
-            EditContext = new EditContext(Model);
-            EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+            _modelClone.DueDate = Model.DueDate;
+            //EditContext = new EditContext(Model);
+            //EditContext.OnFieldChanged += EditContext_OnFieldChanged;
         }
 
         await base.OnInitializedAsync();
