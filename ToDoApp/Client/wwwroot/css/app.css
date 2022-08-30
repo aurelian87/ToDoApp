@@ -90,6 +90,7 @@ td {
     align-items: center;
     justify-content: center;
     padding: 10px;
+    z-index: 10;
 }
 
 .cancel-modal_container {

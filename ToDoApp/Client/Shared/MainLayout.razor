@@ -1,13 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="container-fluid">
-            @Body
-        </div>
-    </main>
+	<div class="sidebar">
+		<NavMenu />
+	</div>
+	<main>
+		<div class="top-row px-4">
+			<div class="d-inline-block">
+				<label for="LanguageSelect" class="form-label visually-hidden">Language</label>
+				<select class="form-select" id="LanguageSelect" @onchange="Change" value="@LanguageSelected">
+					<option value="en-US">English</option>
+					<option value="ro-RO">Romana</option>
+				</select>
+			</div>
+		</div>
+		<div class="container-fluid">
+			@Body
+		</div>
+	</main>
 </div>

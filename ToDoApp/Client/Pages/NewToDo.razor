@@ -30,10 +30,10 @@ else
         </div>
         <div class="row gx-2 justify-content-end">
             <div class="col-auto py-2">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">@Localizer["btn_Save"]</button>
             </div>
             <div class="col-auto py-2">
-                <button type="button" class="btn btn-danger" @onclick="Cancel">Cancel</button>
+                <button type="button" class="btn btn-danger" @onclick="Cancel">@Localizer["btn_Cancel"]</button>
             </div>
         </div>
     </EditForm>
@@ -45,10 +45,10 @@ else
             <p>You have chosen to leave the form and you will lose your unsaved data. Select Yes to save your changes and leave, No to cancel your changes and leave.</p>
             <div class="row gx-2 justify-content-center">
                 <div class="col-auto py-2">
-                    <button type="button" class="btn btn-primary" @onclick="Save">Yes</button>
+                    <button type="button" class="btn btn-primary" @onclick="Save">@Localizer["btn_Yes"]</button>
                 </div>
                 <div class="col-auto py-2">
-                    <button type="button" class="btn btn-danger" @onclick="Reset">No</button>
+                    <button type="button" class="btn btn-danger" @onclick="Reset">@Localizer["btn_No"]</button>
                 </div>
             </div>
         </div>
