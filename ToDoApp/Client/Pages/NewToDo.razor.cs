@@ -6,13 +6,19 @@ namespace ToDoApp.Client.Pages;
 
 public partial class NewToDo
 {
-    #region Private Fields
+    #region Fields
 
     private ToDoModel _model;
 
     private ToDoModel _modelClone;
 
-    #endregion //Private Fields
+    #endregion //Fields
+
+    #region Parameters
+
+    [Parameter] public int ToDoId { get; set; }
+
+    #endregion //Parameters
 
     #region Private Properties
 
@@ -45,12 +51,6 @@ public partial class NewToDo
 
     #endregion //Private Properties 
 
-    #region Parameters
-
-    [Parameter] public int ToDoId { get; set; }
-
-    #endregion //Parameters
-
     #region Private Methods
 
     protected override async Task OnInitializedAsync()
@@ -63,9 +63,10 @@ public partial class NewToDo
         }
         else
         {
-            Model = new ToDoModel();
-            Model.DueDate = DateTime.Now;
-            _modelClone.DueDate = Model.DueDate;
+            Model = new ToDoModel
+            {
+                DueDate = DateTime.Now
+            };
         }
 
         await base.OnInitializedAsync();

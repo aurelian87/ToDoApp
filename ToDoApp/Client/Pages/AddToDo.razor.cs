@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using ToDoApp.Shared.Models;
-using System.Reflection;
-using Microsoft.VisualBasic;
 
 namespace ToDoApp.Client.Pages;
 
 public partial class AddToDo
 {
-    #region Private Fields
+    #region Fields
 
     private ToDoModel _model;
 
     private ToDoModel _modelClone;
 
-    #endregion //Private Fields
+    #endregion //Fields
+
+    #region Parameters
+
+    [Parameter] public int ToDoId { get; set; }
+
+    #endregion //Parameters
 
     #region Private Properties
 
@@ -39,19 +42,9 @@ public partial class AddToDo
         }
     }
 
-    private EditContext? EditContext { get; set; }
-
-    private bool IsModified { get; set; }
-
     private bool ShowCancelPopup { get; set; }
 
     #endregion //Private Properties 
-
-    #region Parameters
-
-    [Parameter] public int ToDoId { get; set; }
-
-    #endregion //Parameters
 
     #region Private Methods
 
@@ -60,32 +53,16 @@ public partial class AddToDo
         if (ToDoId > 0)
         {
             Model = ToDos.ToDosList.Find(x => x.Id == ToDoId);
-            //EditContext = new EditContext(Model);
-            //EditContext.OnFieldChanged += EditContext_OnFieldChanged;
         }
         else
         {
-            Model = new ToDoModel();
-            Model.DueDate = DateTime.Now;
-            _modelClone.DueDate = Model.DueDate;
-            //EditContext = new EditContext(Model);
-            //EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+            Model = new ToDoModel
+            {
+               DueDate = DateTime.Now
+            };
         }
 
         await base.OnInitializedAsync();
-    }
-
-    // Note: The OnFieldChanged event is raised for each field in the model
-    private void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-        if (ToDoId > 0 && !string.IsNullOrEmpty(e.FieldIdentifier.FieldName))
-        {
-            IsModified = true;
-        }
-        else
-        {
-            IsModified = false;
-        }
     }
 
     private void Save()
@@ -115,7 +92,6 @@ public partial class AddToDo
 
     private void Cancel()
     {
-        //if (!MatchObject(Model, _modelClone))
         if (Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate)
         {
             ShowCancelPopup = true;
@@ -123,18 +99,7 @@ public partial class AddToDo
         else
         {
             NavigationManager?.NavigateTo("/todos");
-            //ShowCancelPopup = false;
         }
-
-        //if (!IsModified)
-        //{
-        //    NavigationManager?.NavigateTo("/todos");
-        //    ShowCancelPopup = false;
-        //}
-        //else
-        //{
-        //    ShowCancelPopup = true;
-        //}
     }
 
     private void Reset()
@@ -144,26 +109,6 @@ public partial class AddToDo
         Model.DueDate = _modelClone.DueDate;
 
         NavigationManager?.NavigateTo("/todos");
-    }
-
-    protected bool MatchObject(object newObj, object oldObj)
-    {
-        Type currentType = newObj.GetType();
-        PropertyInfo[] props = currentType.GetProperties();
-
-        bool isSameObject = true;
-        foreach (var prop in props)
-        {
-            var i = prop.GetValue(newObj);
-            var f = prop.GetValue(oldObj);
-            if (!object.Equals(i, f))
-            {
-                isSameObject = false;
-                break;
-            }
-        }
-
-        return isSameObject;
     }
 
     #endregion //Private Methods
