@@ -1,8 +1,6 @@
 ﻿using ToDoApp.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
-using Microsoft.Extensions.Localization;
-using ToDoApp.Shared.ResourceFiles;
 
 namespace ToDoApp.Client.Pages;
 
@@ -27,8 +25,6 @@ public partial class NewToDo
     [Inject] private HttpClient Http { get; set; }
 
     [Inject] protected NavigationManager? NavigationManager { get; set; }
-
-    [Inject] private IStringLocalizer<Resource> Localizer { get; set; }
 
     private ToDoModel Model
     {

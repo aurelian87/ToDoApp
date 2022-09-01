@@ -1,8 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
-using ToDoApp.Shared.ResourceFiles;
 
 namespace ToDoApp.Client.Shared;
 
@@ -13,8 +11,6 @@ public partial class MainLayout
     [Inject] private ILocalStorageService localStorage { get; set; }
 
     [Inject] private NavigationManager NavigationManager { get; set; }
-
-    [Inject] private IStringLocalizer<Resource> Localizer { get; set; }
 
     private string LanguageSelected { get; set; }
 

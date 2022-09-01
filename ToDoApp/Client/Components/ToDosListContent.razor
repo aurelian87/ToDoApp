@@ -1,4 +1,4 @@
-﻿<h3>@Localizer["ToDoListName"]</h3>
+﻿<h3>@Resource.ToDoListName</h3>
 
 @if (ToDos == null || ToDos.Count == 0)
 {
@@ -13,11 +13,11 @@ else
 	<table class="table">
 		<thead>
 			<tr>
-				<th>@Localizer["th_ToDoId"]</th>
-				<th>@Localizer["th_ToDoTitle"]</th>
-				<th>@Localizer["th_ToDoDescription"]</th>
-				<th>@Localizer["th_ToDoDueDate"]</th>
-				<th>@Localizer["th_ToDoActions"]</th>
+				<th>@Resource.th_ToDoId</th>
+				<th>@Resource.th_ToDoTitle</th>
+				<th>@Resource.th_ToDoDescription</th>
+				<th>@Resource.th_ToDoDueDate</th>
+				<th>@Resource.th_ToDoActions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,8 +28,8 @@ else
 					<td>@item.Description</td>
 					<td>@item.DueDate.ToShortDateString()</td>
 					<td>
-						<button type="button" class="btn btn-dark btn-sm" @onclick="(() => Edit(item.Id))">@Localizer["btn_Edit"]</button>
-						<button type="button" class="btn btn-danger btn-sm" @onclick="(() => Delete(item.Id))">@Localizer["btn_Delete"]</button>
+						<button type="button" class="btn btn-dark btn-sm" @onclick="(() => Edit(item.Id))">@Resource.btn_Edit</button>
+						<button type="button" class="btn btn-danger btn-sm" @onclick="(() => Delete(item.Id))">@Resource.btn_Delete</button>
 					</td>
 				</tr>
 			}
@@ -38,14 +38,14 @@ else
 }
 <div class="row gx-2 justify-content-end">
 	<div class="col-auto py-2">
-		<a href="toDos/0" class="btn btn-primary">@Localizer["btn_Add"]</a>
+		<a href="toDos/0" class="btn btn-primary">@Resource.btn_Add</a>
 	</div>
 	@if (ToDos.Count > 0){
 		<div class="col-auto py-2">
-			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedToDoId))">@Localizer["btn_Edit"]</button>
+			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedToDoId))">@Resource.btn_Edit</button>
 		</div>
 		<div class="col-auto py-2">
-			<button type="button" class="btn btn-danger" @onclick="(() => Delete(SelectedToDoId))">@Localizer["btn_Delete"]</button>
+			<button type="button" class="btn btn-danger" @onclick="(() => Delete(SelectedToDoId))">@Resource.btn_Delete</button>
 		</div>
 	}
 </div>

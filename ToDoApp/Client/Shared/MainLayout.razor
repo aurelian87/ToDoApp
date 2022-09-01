@@ -7,10 +7,10 @@
 	<main>
 		<div class="top-row px-4">
 			<div class="d-inline-block">
-				<label for="LanguageSelect" class="form-label visually-hidden">Language</label>
+				<label for="LanguageSelect" class="form-label visually-hidden">@Resource.LangSelectorLabel</label>
 				<select class="form-select" id="LanguageSelect" @onchange="Change" value="@LanguageSelected">
-					<option value="en-US">English</option>
-					<option value="ro-RO">Romana</option>
+					<option value="en-US">@Resource.LangSelectorEnglish</option>
+					<option value="ro-RO">@Resource.LangSelectorRomanian</option>
 				</select>
 			</div>
 		</div>

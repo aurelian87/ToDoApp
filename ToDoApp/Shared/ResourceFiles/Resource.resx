@@ -137,4 +137,25 @@
     <data name="btn_No" xml:space="preserve">
 		<value>No</value>
 	</data>
+    <data name="LangSelectorEnglish" xml:space="preserve">
+		<value>English</value>
+	</data>
+    <data name="LangSelectorRomanian" xml:space="preserve">
+		<value>Romanian</value>
+	</data>
+    <data name="LangSelectorLabel" xml:space="preserve">
+		<value>Language</value>
+	</data>
+    <data name="lbl_ToDoTitle" xml:space="preserve">
+		<value>Title</value>
+	</data>
+    <data name="lbl_ToDoDescription" xml:space="preserve">
+		<value>Description</value>
+	</data>
+    <data name="lbl_ToDoDueDate" xml:space="preserve">
+		<value>Due Date</value>
+	</data>
+    <data name="info_ToDoCancelMessage" xml:space="preserve">
+		<value>You have chosen to leave the form and you will lose your unsaved data. Select Yes to save your changes and leave, No to cancel your changes and leave.</value>
+	</data>
 </root>

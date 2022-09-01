@@ -124,6 +124,69 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have chosen to leave the form and you will lose your unsaved data. Select Yes to save your changes and leave, No to cancel your changes and leave..
+        /// </summary>
+        public static string info_ToDoCancelMessage {
+            get {
+                return ResourceManager.GetString("info_ToDoCancelMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LangSelectorEnglish {
+            get {
+                return ResourceManager.GetString("LangSelectorEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string LangSelectorLabel {
+            get {
+                return ResourceManager.GetString("LangSelectorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Romanian.
+        /// </summary>
+        public static string LangSelectorRomanian {
+            get {
+                return ResourceManager.GetString("LangSelectorRomanian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string lbl_ToDoDescription {
+            get {
+                return ResourceManager.GetString("lbl_ToDoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Date.
+        /// </summary>
+        public static string lbl_ToDoDueDate {
+            get {
+                return ResourceManager.GetString("lbl_ToDoDueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string lbl_ToDoTitle {
+            get {
+                return ResourceManager.GetString("lbl_ToDoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actions.
         /// </summary>
         public static string th_ToDoActions {

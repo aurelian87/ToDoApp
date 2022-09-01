@@ -137,4 +137,25 @@
     <data name="btn_No" xml:space="preserve">
 		<value>Nu</value>
 	</data>
+    <data name="LangSelectorEnglish" xml:space="preserve">
+		<value>Engleza</value>
+	</data>
+    <data name="LangSelectorRomanian" xml:space="preserve">
+		<value>Romana</value>
+	</data>
+    <data name="LangSelectorLabel" xml:space="preserve">
+		<value>Limba</value>
+	</data>
+    <data name="lbl_ToDoTitle" xml:space="preserve">
+		<value>Titlu</value>
+	</data>
+    <data name="lbl_ToDoDescription" xml:space="preserve">
+		<value>Descriere</value>
+	</data>
+    <data name="lbl_ToDoDueDate" xml:space="preserve">
+		<value>Data</value>
+	</data>
+    <data name="info_ToDoCancelMessage" xml:space="preserve">
+		<value>Ati ales sa parasiti formularul si veti pierde datele nesalvate. Selectati Da pentru a salva datele sau Nu pentru a renunta si a parasi formularul.</value>
+	</data>
 </root>
