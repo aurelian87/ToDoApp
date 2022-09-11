@@ -2,13 +2,13 @@
 
 @if (ToDoId > 0)
 {
-    <PageTitle>ToDo - Edit</PageTitle>
-    <h3>Edit ToDo</h3>
+    <PageTitle>@Resource.PageTitleEditTodo</PageTitle>
+    <h3>@Resource.HeadingEditTodo</h3>
 }
 else
 {
-    <PageTitle>ToDo - Add</PageTitle>
-    <h3>Add ToDo</h3>
+    <PageTitle>@Resource.PageTitleAddTodo</PageTitle>
+    <h3>@Resource.HeadingAddTodo</h3>
 }
 @if (Model != null)
 {

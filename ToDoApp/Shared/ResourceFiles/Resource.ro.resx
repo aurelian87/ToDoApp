@@ -158,4 +158,16 @@
     <data name="info_ToDoCancelMessage" xml:space="preserve">
 		<value>Ati ales sa parasiti formularul si veti pierde datele nesalvate. Selectati Da pentru a salva datele sau Nu pentru a renunta si a parasi formularul.</value>
 	</data>
+    <data name="PageTitleAddTodo" xml:space="preserve">
+		<value>ToDo - Adauga</value>
+	</data>
+    <data name="PageTitleEditTodo" xml:space="preserve">
+		<value>ToDo - Editeaza</value>
+	</data>
+    <data name="HeadingAddTodo" xml:space="preserve">
+		<value>Adauga ToDo</value>
+	</data>
+    <data name="HeadingEditTodo" xml:space="preserve">
+		<value>Editeaza ToDo</value>
+	</data>
 </root>

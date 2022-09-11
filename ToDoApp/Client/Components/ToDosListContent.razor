@@ -1,5 +1,14 @@
 ﻿<h3>@Resource.ToDoListName</h3>
 
+<div class="row gx-0 flex-nowrap mb-4">
+	<div class="col">
+		<label for="search" class="form-label visually-hidden">Search</label>
+		<input type="search" id="search" class="form-control rounded-end-0" placeholder="Search" @bind="SearchTerm" @onkeyup="OnEnter" />
+	</div>
+	<div class="col-auto">
+		<button type="submit" class="btn btn-dark rounded-start-0" @onclick="Search">Search</button>
+	</div>
+</div>
 @if (ToDos == null || ToDos.Count == 0)
 {
 	<div class="d-flex justify-content-center">
@@ -13,7 +22,6 @@ else
 	<table class="table">
 		<thead>
 			<tr>
-				<th>@Resource.th_ToDoId</th>
 				<th>@Resource.th_ToDoTitle</th>
 				<th>@Resource.th_ToDoDescription</th>
 				<th>@Resource.th_ToDoDueDate</th>
@@ -23,7 +31,6 @@ else
 		<tbody>
 			@foreach (var item in ToDos){
 				<tr class="@(SelectedToDoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Now ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
-					<td>@item.Id</td>
 					<td>@item.Title</td>
 					<td>@item.Description</td>
 					<td>@item.DueDate.ToShortDateString()</td>

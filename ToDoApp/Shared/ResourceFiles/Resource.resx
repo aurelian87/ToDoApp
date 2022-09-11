@@ -158,4 +158,16 @@
     <data name="info_ToDoCancelMessage" xml:space="preserve">
 		<value>You have chosen to leave the form and you will lose your unsaved data. Select Yes to save your changes and leave, No to cancel your changes and leave.</value>
 	</data>
+    <data name="PageTitleAddTodo" xml:space="preserve">
+		<value>ToDo - Add</value>
+	</data>
+    <data name="PageTitleEditTodo" xml:space="preserve">
+		<value>ToDo - Edit</value>
+	</data>
+    <data name="HeadingAddTodo" xml:space="preserve">
+		<value>Add ToDo</value>
+	</data>
+    <data name="HeadingEditTodo" xml:space="preserve">
+		<value>Edit ToDo</value>
+	</data>
 </root>

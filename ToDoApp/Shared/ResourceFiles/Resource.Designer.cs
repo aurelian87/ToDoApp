@@ -124,6 +124,24 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add ToDo.
+        /// </summary>
+        public static string HeadingAddTodo {
+            get {
+                return ResourceManager.GetString("HeadingAddTodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit ToDo.
+        /// </summary>
+        public static string HeadingEditTodo {
+            get {
+                return ResourceManager.GetString("HeadingEditTodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have chosen to leave the form and you will lose your unsaved data. Select Yes to save your changes and leave, No to cancel your changes and leave..
         /// </summary>
         public static string info_ToDoCancelMessage {
@@ -183,6 +201,24 @@ namespace ToDoApp.Shared.ResourceFiles {
         public static string lbl_ToDoTitle {
             get {
                 return ResourceManager.GetString("lbl_ToDoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ToDo - Add.
+        /// </summary>
+        public static string PageTitleAddTodo {
+            get {
+                return ResourceManager.GetString("PageTitleAddTodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ToDo - Edit.
+        /// </summary>
+        public static string PageTitleEditTodo {
+            get {
+                return ResourceManager.GetString("PageTitleEditTodo", resourceCulture);
             }
         }
         

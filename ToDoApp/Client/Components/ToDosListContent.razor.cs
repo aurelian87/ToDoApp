@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ToDoApp.Shared.Models;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace ToDoApp.Client.Components;
 
@@ -17,6 +18,8 @@ public partial class ToDosListContent
     private ToDoModel todo { get; set; }
 
     private int SelectedToDoId { get; set; }
+
+    private string SearchTerm { get; set; }
 
     #endregion //Private Properties
 
@@ -78,6 +81,28 @@ public partial class ToDosListContent
     {
         SelectedToDoId = item.Id;
         return Task.CompletedTask;
+    }
+
+
+    private async Task Search()
+    {
+        if (!string.IsNullOrEmpty(SearchTerm))
+        {
+            ToDos = await Http.GetFromJsonAsync<List<ToDoModel>>("/api/ToDos");
+            ToDos = ToDos.Where(item => item.Title.Contains(SearchTerm)).ToList();
+        }
+        else
+        {
+            await LoadToDos();
+        }
+    }
+
+    private async Task OnEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await Search();
+        }
     }
 
     #endregion //Private Methods
