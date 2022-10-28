@@ -170,4 +170,10 @@
     <data name="HeadingEditTodo" xml:space="preserve">
 		<value>Editeaza ToDo</value>
 	</data>
+    <data name="btn_Search" xml:space="preserve">
+		<value>Cauta</value>
+	</data>
+    <data name="SearchInputPlaceholder" xml:space="preserve">
+		<value>Cauta</value>
+	</data>
 </root>

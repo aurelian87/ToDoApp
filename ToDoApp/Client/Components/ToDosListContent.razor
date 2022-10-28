@@ -3,10 +3,10 @@
 <div class="row gx-0 flex-nowrap mb-4">
 	<div class="col">
 		<label for="search" class="form-label visually-hidden">Search</label>
-		<input type="search" id="search" class="form-control rounded-end-0" placeholder="Search" @bind="SearchTerm" @onkeyup="OnEnter" />
+		<input type="search" id="search" class="form-control rounded-end-0" placeholder="@Resource.SearchInputPlaceholder" @bind="SearchTerm" @onkeyup="OnEnter" />
 	</div>
 	<div class="col-auto">
-		<button type="submit" class="btn btn-dark rounded-start-0" @onclick="Search">Search</button>
+		<button type="submit" class="btn btn-dark rounded-start-0" @onclick="Search">@Resource.btn_Search</button>
 	</div>
 </div>
 @if (ToDos == null || ToDos.Count == 0)

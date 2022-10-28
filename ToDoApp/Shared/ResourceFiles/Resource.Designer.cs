@@ -115,6 +115,15 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string btn_Search {
+            get {
+                return ResourceManager.GetString("btn_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
         public static string btn_Yes {
@@ -219,6 +228,15 @@ namespace ToDoApp.Shared.ResourceFiles {
         public static string PageTitleEditTodo {
             get {
                 return ResourceManager.GetString("PageTitleEditTodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SearchInputPlaceholder {
+            get {
+                return ResourceManager.GetString("SearchInputPlaceholder", resourceCulture);
             }
         }
         
