@@ -176,4 +176,16 @@
     <data name="SearchInputPlaceholder" xml:space="preserve">
 		<value>Search</value>
 	</data>
+    <data name="er_ToDoModel_TitleRequired" xml:space="preserve">
+		<value>Title is required!</value>
+	</data>
+    <data name="er_ToDoModel_DescriptionRequired" xml:space="preserve">
+		<value>Description is required!</value>
+	</data>
+    <data name="er_ToDoModel_DueDateRequired" xml:space="preserve">
+		<value>DueDate is required!</value>
+	</data>
+    <data name="er_ToDoModel_DueDateInvalid" xml:space="preserve">
+		<value>DueDate must be not in the past!</value>
+	</data>
 </root>

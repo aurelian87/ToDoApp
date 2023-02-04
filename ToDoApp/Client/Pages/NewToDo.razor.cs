@@ -1,6 +1,9 @@
-﻿using ToDoApp.Shared.Models;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Components;
+using Newtonsoft.Json;
 using System.Net.Http.Json;
+using ToDoApp.Shared.Models;
+using ToDoApp.Shared.Validations;
 
 namespace ToDoApp.Client.Pages;
 
@@ -8,9 +11,7 @@ public partial class NewToDo
 {
     #region Fields
 
-    private ToDoModel _model;
-
-    private ToDoModel _modelClone;
+    private FluentValidationValidator? _fluentValidationValidator;
 
     #endregion //Fields
 
@@ -26,24 +27,11 @@ public partial class NewToDo
 
     [Inject] protected NavigationManager? NavigationManager { get; set; }
 
-    private ToDoModel Model
-    {
-        get
-        {
-            return _model;
-        }
-        set
-        {
-            _model = value;
-            _modelClone = new ToDoModel
-            {
-                Id = value.Id,
-                Title = value.Title,
-                Description = value.Description,
-                DueDate = value.DueDate
-            };
-        }
-    }
+    [Inject] private IMapper Mapper { get; set; }
+
+    private ToDoModel Model { get; set; } = new();
+
+    private ToDoModel ModelClone { get; set; } = new();
 
     private List<ToDoModel> ToDos { get; set; } = new List<ToDoModel>();
 
@@ -60,6 +48,7 @@ public partial class NewToDo
         if (ToDoId > 0)
         {
             Model = ToDos.Find(x => x.Id == ToDoId);
+            ModelClone = Mapper.Map(Model, ModelClone);
         }
         else
         {
@@ -67,6 +56,7 @@ public partial class NewToDo
             {
                 DueDate = DateTime.Now
             };
+            ModelClone = Mapper.Map(Model, ModelClone);
         }
 
         await base.OnInitializedAsync();
@@ -89,7 +79,10 @@ public partial class NewToDo
 
     private void Cancel()
     {
-        if (Model.Title != _modelClone.Title || Model.Description != _modelClone.Description || Model.DueDate != _modelClone.DueDate)
+        var defaultData = JsonConvert.SerializeObject(Model);
+        var newData = JsonConvert.SerializeObject(ModelClone);
+
+        if (defaultData != newData)
         {
             ShowCancelPopup = true;
         }
@@ -98,12 +91,10 @@ public partial class NewToDo
             NavigationManager?.NavigateTo("/");
         }
     }
+
     private void Reset()
     {
-        Model.Title = _modelClone.Title;
-        Model.Description = _modelClone.Description;
-        Model.DueDate = _modelClone.DueDate;
-
+        Model = ModelClone;
         NavigationManager?.NavigateTo("/");
     }
 

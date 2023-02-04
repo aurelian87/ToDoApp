@@ -1,6 +1,6 @@
-﻿namespace ToDoApp.Shared.Models
+﻿namespace ToDoApp.Shared.ModelsDto
 {
-    public class ToDoModel
+    public class ToDoModelDto
     {
         public int Id { get; set; }
 

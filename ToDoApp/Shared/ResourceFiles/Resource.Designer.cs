@@ -133,6 +133,42 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description is required!.
+        /// </summary>
+        public static string er_ToDoModel_DescriptionRequired {
+            get {
+                return ResourceManager.GetString("er_ToDoModel_DescriptionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DueDate must be not in the past!.
+        /// </summary>
+        public static string er_ToDoModel_DueDateInvalid {
+            get {
+                return ResourceManager.GetString("er_ToDoModel_DueDateInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DueDate is required!.
+        /// </summary>
+        public static string er_ToDoModel_DueDateRequired {
+            get {
+                return ResourceManager.GetString("er_ToDoModel_DueDateRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title is required!.
+        /// </summary>
+        public static string er_ToDoModel_TitleRequired {
+            get {
+                return ResourceManager.GetString("er_ToDoModel_TitleRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add ToDo.
         /// </summary>
         public static string HeadingAddTodo {
