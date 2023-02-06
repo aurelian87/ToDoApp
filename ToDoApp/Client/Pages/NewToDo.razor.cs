@@ -43,11 +43,10 @@ public partial class NewToDo
 
     protected override async Task OnInitializedAsync()
     {
-        ToDos = await Http.GetFromJsonAsync<List<ToDoModel>>("/api/ToDos");
-
         if (ToDoId > 0)
         {
-            Model = ToDos.Find(x => x.Id == ToDoId);
+            var todo = await Http.GetFromJsonAsync<ToDoModel>($"/api/ToDos/{ToDoId}");
+            Model = todo;
             ModelClone = Mapper.Map(Model, ModelClone);
         }
         else
@@ -70,7 +69,7 @@ public partial class NewToDo
         }
         else
         {
-            await Http.PutAsJsonAsync("/api/ToDos/" + Model.Id, Model);
+            await Http.PutAsJsonAsync($"/api/ToDos/{Model.Id}", Model);
         }
 
         NavigationManager?.NavigateTo("/");
