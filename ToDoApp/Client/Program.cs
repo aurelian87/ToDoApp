@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using ToDoApp.Client;
 using ToDoApp.Client.Extensions;
+using ToDoApp.Client.Services;
 using ToDoApp.Shared.AutoMapper;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -13,6 +14,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddLocalization();
 builder.Services.AddAutoMapper(typeof(ModelsProfile));
+builder.Services.AddScoped<IToDoService, ToDoService>();
+//builder.Services.AddTransient<IToDoService, ToDoService>();
 
 //await builder.Build().RunAsync();
 

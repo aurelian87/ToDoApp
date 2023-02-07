@@ -2,6 +2,7 @@
 using ToDoApp.Shared.Models;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Web;
+using ToDoApp.Client.Services;
 
 namespace ToDoApp.Client.Components;
 
@@ -11,7 +12,7 @@ public partial class ToDosListContent
 
     [Inject] private HttpClient Http { get; set; }
 
-    [Inject] protected NavigationManager? NavigationManager { get; set; }
+    [Inject] private IToDoService ToDoService { get; set; }
 
     private List<ToDoModel> ToDos { get; set; }
 
@@ -30,7 +31,10 @@ public partial class ToDosListContent
         todo = new ToDoModel();
         ToDos = new List<ToDoModel>();
 
-        ToDos = await Http.GetFromJsonAsync<List<ToDoModel>>("/api/ToDos");
+        //ToDos = await Http.GetFromJsonAsync<List<ToDoModel>>("/api/ToDos");
+        var todoById = ToDoService.GetById();
+
+        ToDos = await ToDoService.GetAll(); 
         ToDos = ToDos.OrderByDescending(x => x.Id).ToList();
 
         if (ToDos.Count > 0)

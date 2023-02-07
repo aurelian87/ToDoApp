@@ -25,8 +25,6 @@ public partial class NewToDo
 
     [Inject] private HttpClient Http { get; set; }
 
-    [Inject] protected NavigationManager? NavigationManager { get; set; }
-
     [Inject] private IMapper Mapper { get; set; }
 
     private ToDoModel Model { get; set; } = new();
