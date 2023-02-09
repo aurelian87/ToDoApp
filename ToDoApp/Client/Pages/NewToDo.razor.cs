@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
-using System.Net.Http.Json;
+using ToDoApp.Client.Services;
 using ToDoApp.Shared.Models;
 using ToDoApp.Shared.Validations;
 
@@ -23,15 +23,13 @@ public partial class NewToDo
 
     #region Private Properties
 
-    [Inject] private HttpClient Http { get; set; }
+    [Inject] private IToDoService ToDoService { get; set; }
 
     [Inject] private IMapper Mapper { get; set; }
 
     private ToDoModel Model { get; set; } = new();
 
     private ToDoModel ModelClone { get; set; } = new();
-
-    private List<ToDoModel> ToDos { get; set; } = new List<ToDoModel>();
 
     private bool ShowCancelPopup { get; set; }
 
@@ -43,7 +41,7 @@ public partial class NewToDo
     {
         if (ToDoId > 0)
         {
-            var todo = await Http.GetFromJsonAsync<ToDoModel>($"/api/ToDos/{ToDoId}");
+            var todo = await ToDoService.GetById(ToDoId);
             Model = todo;
             ModelClone = Mapper.Map(Model, ModelClone);
         }
@@ -61,17 +59,16 @@ public partial class NewToDo
 
     private async Task Save()
     {
-        if (Model.Id == 0)
+        if (ToDoId == 0)
         {
-            await Http.PostAsJsonAsync("/api/ToDos", Model);
+            await ToDoService.Add(Model);
         }
         else
         {
-            await Http.PutAsJsonAsync($"/api/ToDos/{Model.Id}", Model);
+            await ToDoService.Update(ToDoId, Model);
         }
 
         NavigationManager?.NavigateTo("/");
-
     }
 
     private void Cancel()

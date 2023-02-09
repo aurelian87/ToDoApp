@@ -19,7 +19,7 @@
 		</div>
 	</div>
 }
-else 
+else
 {
 	<table class="table">
 		<thead>
@@ -31,7 +31,8 @@ else
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var item in ToDos){
+			@foreach (var item in ToDos)
+			{
 				<tr class="@(SelectedToDoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Now ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
 					<td>@item.Title</td>
 					<td>@item.Description</td>
@@ -49,7 +50,8 @@ else
 	<div class="col-auto py-2">
 		<a href="toDos/0" class="btn btn-primary">@Resource.btn_Add</a>
 	</div>
-	@if (ToDos.Count > 0){
+	@if (ToDos?.Count > 0)
+	{
 		<div class="col-auto py-2">
 			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedToDoId))">@Resource.btn_Edit</button>
 		</div>

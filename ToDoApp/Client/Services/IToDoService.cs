@@ -4,10 +4,14 @@ namespace ToDoApp.Client.Services
 {
 	public interface IToDoService
 	{
-        Task<IEnumerable<ToDoModel>> GetToDos();
-
         Task<List<ToDoModel>> GetAll();
 
-        Task<ToDoModel> GetById();
+        Task<ToDoModel> GetById(int id);
+
+        Task<ToDoModel> Add(ToDoModel todo);
+
+        Task<ToDoModel> Update(int id, ToDoModel todo);
+
+        Task<ToDoModel> Delete(int id);
     }
 }

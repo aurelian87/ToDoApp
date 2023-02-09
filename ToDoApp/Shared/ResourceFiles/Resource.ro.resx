@@ -180,10 +180,10 @@
 		<value>Titlu este obligatoriu!</value>
 	</data>
     <data name="er_ToDoModel_DescriptionRequired" xml:space="preserve">
-		<value>Descriere este obligatoriu!</value>
+		<value>Descrierea este obligatorie!</value>
 	</data>
     <data name="er_ToDoModel_DueDateRequired" xml:space="preserve">
-		<value>Data este obligatoriu!</value>
+		<value>Data este obligatorie!</value>
 	</data>
     <data name="er_ToDoModel_DueDateInvalid" xml:space="preserve">
 		<value>Data trebuie sa nu fie in trecut!</value>
