@@ -48,7 +48,7 @@ else
 }
 <div class="row gx-2 justify-content-end">
 	<div class="col-auto py-2">
-		<a href="toDos/0" class="btn btn-primary">@Resource.btn_Add</a>
+		<button type="button" class="btn btn-primary" @onclick="Add">@Resource.btn_Add</button>
 	</div>
 	@if (ToDos?.Count > 0)
 	{

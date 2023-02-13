@@ -7,6 +7,7 @@ using ToDoApp.Shared.Validations;
 
 namespace ToDoApp.Client.Pages;
 
+[Route($"{PageRoute.TodoDetails}")]
 public partial class NewToDo
 {
     #region Fields
@@ -23,9 +24,9 @@ public partial class NewToDo
 
     #region Private Properties
 
-    [Inject] private IToDoService ToDoService { get; set; }
+    [Inject] private IToDoService? ToDoService { get; set; }
 
-    [Inject] private IMapper Mapper { get; set; }
+    [Inject] private IMapper? Mapper { get; set; }
 
     private ToDoModel Model { get; set; } = new();
 
@@ -68,7 +69,7 @@ public partial class NewToDo
             await ToDoService.Update(ToDoId, Model);
         }
 
-        NavigationManager?.NavigateTo("/");
+        NavigationManager?.NavigateTo(PageRoute.Home);
     }
 
     private void Cancel()
@@ -82,14 +83,14 @@ public partial class NewToDo
         }
         else
         {
-            NavigationManager?.NavigateTo("/");
+            NavigationManager?.NavigateTo(PageRoute.Home);
         }
     }
 
     private void Reset()
     {
         Model = ModelClone;
-        NavigationManager?.NavigateTo("/");
+        NavigationManager?.NavigateTo(PageRoute.Home);
     }
 
     #endregion //Private Methods

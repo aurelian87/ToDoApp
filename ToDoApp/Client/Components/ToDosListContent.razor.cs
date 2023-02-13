@@ -9,13 +9,13 @@ public partial class ToDosListContent
 {
 	#region Private Properties
 
-	[Inject] private IToDoService ToDoService { get; set; }
+	[Inject] private IToDoService? ToDoService { get; set; }
 
 	private List<ToDoModel> ToDos { get; set; } = new();
 
 	private int SelectedToDoId { get; set; }
 
-	private string SearchTerm { get; set; }
+	private string? SearchTerm { get; set; }
 
 	#endregion //Private Properties
 
@@ -39,6 +39,11 @@ public partial class ToDosListContent
 		ToDos = ToDos.OrderByDescending(x => x.Id).ToList();
 	}
 
+	private void Add()
+	{
+		NavigationManager?.NavigateTo($"{PageRoute.Todos}/0");
+	}
+
 	private async Task Delete(int id)
 	{
 		await ToDoService.Delete(id);
@@ -48,7 +53,7 @@ public partial class ToDosListContent
 
 	private void Edit(int id)
 	{
-		NavigationManager?.NavigateTo($"toDos/{id}");
+		NavigationManager?.NavigateTo($"{PageRoute.Todos}/{id}");
 	}
 
 	private Task OnSelectedItem(ToDoModel item)
