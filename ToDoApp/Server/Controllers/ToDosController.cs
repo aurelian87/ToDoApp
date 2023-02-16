@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using ToDoApp.Server.Data;
 using ToDoApp.Shared.Models;
+using ToDoApp.Shared.RequestsUri;
 
 namespace ToDoApp.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route(TodoRequestsUri.GetAll)]
     public class ToDosController : Controller
     {
         private readonly ToDosAPIDbContext _context;

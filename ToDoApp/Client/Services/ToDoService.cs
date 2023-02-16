@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using ToDoApp.Shared.Models;
+using ToDoApp.Shared.RequestsUri;
 
 namespace ToDoApp.Client.Services
 {
@@ -8,7 +9,7 @@ namespace ToDoApp.Client.Services
         #region Fields
 
         private readonly HttpClient _httpClient;
-        private const string requestUri = "/api/ToDos";
+        private const string requestUri = TodoRequestsUri.GetAll;
 
         #endregion //Fields
 
