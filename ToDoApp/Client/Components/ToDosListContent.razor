@@ -33,7 +33,7 @@ else
 		<tbody>
 			@foreach (var item in ToDos)
 			{
-				<tr class="@(SelectedToDoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Now ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
+				<tr class="@(SelectedToDoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Today ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
 					<td>@item.Title</td>
 					<td>@item.Description</td>
 					<td>@item.DueDate.ToShortDateString()</td>

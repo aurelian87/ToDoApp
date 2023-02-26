@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using ToDoApp.Server.Data;
 using ToDoApp.Shared.Models;
 using ToDoApp.Shared.RequestsUri;
@@ -45,7 +44,7 @@ namespace ToDoApp.Server.Controllers
             {
                 Title = addToDo.Title,
                 Description = addToDo.Description,
-                DueDate = addToDo.DueDate
+                DueDate = new DateTime(addToDo.DueDate.Year, addToDo.DueDate.Month, addToDo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
             };
 
             await _context.ToDos.AddAsync(todo);
@@ -64,13 +63,11 @@ namespace ToDoApp.Server.Controllers
             {
                 todo.Title = updateTodo.Title;
                 todo.Description = updateTodo.Description;
-                todo.DueDate = updateTodo.DueDate;
+                todo.DueDate = new DateTime(updateTodo.DueDate.Year, updateTodo.DueDate.Month, updateTodo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
                 await _context.SaveChangesAsync();
-
                 return Ok(todo);
             }
-
             return NotFound();
         }
 
