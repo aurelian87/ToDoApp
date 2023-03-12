@@ -42,9 +42,9 @@ public partial class NewToDo
     {
         if (ToDoId > 0)
         {
-            var todo = await ToDoService.GetById(ToDoId);
+            var todo = await ToDoService!.GetById(ToDoId);
             Model = todo;
-            ModelClone = Mapper.Map(Model, ModelClone);
+            ModelClone = Mapper!.Map(Model, ModelClone);
         }
         else
         {
@@ -52,7 +52,7 @@ public partial class NewToDo
             {
                 DueDate = DateTime.Now
             };
-            ModelClone = Mapper.Map(Model, ModelClone);
+            ModelClone = Mapper!.Map(Model, ModelClone);
         }
 
         await base.OnInitializedAsync();
@@ -62,11 +62,19 @@ public partial class NewToDo
     {
         if (ToDoId == 0)
         {
-            await ToDoService.Add(Model);
+            var isValid = await _fluentValidationValidator!.ValidateAsync();
+            if (isValid)
+            {
+                await ToDoService!.Add(Model);
+            }
         }
         else
         {
-            await ToDoService.Update(ToDoId, Model);
+            var isValid = await _fluentValidationValidator!.ValidateAsync();
+            if (isValid)
+            {
+                await ToDoService!.Update(ToDoId, Model);
+            }
         }
 
         NavigationManager?.NavigateTo(PageRoute.Home);

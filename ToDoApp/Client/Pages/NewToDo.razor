@@ -27,7 +27,6 @@ else
         <label for="DueDate" class="form-label">@Resource.lbl_ToDoDueDate</label>
         <InputDate id="DueDate" class="form-control" @bind-Value="Model.DueDate" ParsingErrorMessage="@Resource.er_ToDoModel_DueDateRequired" />
         <ValidationMessage For="(() => Model.DueDate)" />
-        <p>Model.DueDate: @Model.DueDate</p>
     </div>
     <div class="row gx-2 justify-content-end">
         <div class="col-auto py-2">

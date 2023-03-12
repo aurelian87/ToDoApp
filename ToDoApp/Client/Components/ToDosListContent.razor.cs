@@ -35,7 +35,7 @@ public partial class ToDosListContent
 
 	private async Task LoadToDos()
 	{
-		ToDos = await ToDoService.GetAll();
+		ToDos = await ToDoService!.GetAll();
 		ToDos = ToDos.OrderByDescending(x => x.Id).ToList();
 	}
 
@@ -46,7 +46,7 @@ public partial class ToDosListContent
 
 	private async Task Delete(int id)
 	{
-		await ToDoService.Delete(id);
+		await ToDoService!.Delete(id);
 
 		await LoadToDos();
 	}
