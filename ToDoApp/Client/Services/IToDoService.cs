@@ -1,10 +1,14 @@
 ﻿using ToDoApp.Shared.Models;
+using ToDoApp.Shared.Requests;
+using ToDoApp.Shared.Response;
 
 namespace ToDoApp.Client.Services
 {
 	public interface IToDoService
 	{
         Task<List<ToDoModel>> GetAll();
+
+        Task<PageResponse<ToDoModel>> GetPaginatedResult(PageRequest pageRequest);
 
         Task<ToDoModel> GetById(int id);
 

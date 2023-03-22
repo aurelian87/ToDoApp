@@ -19,7 +19,8 @@ public static class WebAssemblyHostExtension
         }
         else
         {
-            culture = new CultureInfo("en-US");
+            await storageService.SetItemAsync("language", "ro-RO");
+            culture = new CultureInfo("ro-RO");
         }
 
         CultureInfo.DefaultThreadCurrentCulture = culture;

@@ -1,7 +1,6 @@
 ﻿@inherits ExtendedComponentBase
 
 <h3>@Resource.ToDoListName</h3>
-
 <div class="row gx-0 flex-nowrap mb-4">
 	<div class="col">
 		<label for="search" class="form-label visually-hidden">Search</label>
@@ -60,3 +59,6 @@ else
 		</div>
 	}
 </div>
+<Pagination PageResponse="PageResponse"
+			OnPageChanged="async pageNumber => {await GetPageNumber(pageNumber);}"
+			AriaLabel="pagination for todos" />

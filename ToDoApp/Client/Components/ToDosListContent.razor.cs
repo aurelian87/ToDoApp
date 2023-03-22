@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using ToDoApp.Client.Services;
 using ToDoApp.Shared.Models;
+using ToDoApp.Shared.Requests;
+using ToDoApp.Shared.Response;
 
 namespace ToDoApp.Client.Components;
 
@@ -11,7 +13,11 @@ public partial class ToDosListContent
 
 	[Inject] private IToDoService? ToDoService { get; set; }
 
-	private List<ToDoModel> ToDos { get; set; } = new();
+	private PageResponse<ToDoModel>? PageResponse { get; set; }
+
+	private List<ToDoModel> ToDos => PageResponse?.Data ?? new();
+
+	//private List<ToDoModel> ToDosPag => PageResponse?.Data ?? new();
 
 	private int SelectedToDoId { get; set; }
 
@@ -30,13 +36,16 @@ public partial class ToDosListContent
 			SelectedToDoId = ToDos[0].Id;
 		}
 
+		//PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
+
 		await base.OnInitializedAsync();
 	}
 
 	private async Task LoadToDos()
 	{
-		ToDos = await ToDoService!.GetAll();
-		ToDos = ToDos.OrderByDescending(x => x.Id).ToList();
+		//ToDos = await ToDoService!.GetAll();
+		//ToDos = ToDos.OrderByDescending(x => x.Id).ToList();
+		PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
 	}
 
 	private void Add()
@@ -47,7 +56,6 @@ public partial class ToDosListContent
 	private async Task Delete(int id)
 	{
 		await ToDoService!.Delete(id);
-
 		await LoadToDos();
 	}
 
@@ -67,7 +75,7 @@ public partial class ToDosListContent
 		if (!string.IsNullOrEmpty(SearchTerm))
 		{
 			await LoadToDos();
-			ToDos = ToDos.Where(item => item.Title.Contains(SearchTerm)).ToList();
+			//ToDos = ToDos.Where(item => item.Title.Contains(SearchTerm)).ToList();
 		}
 		else
 		{
@@ -81,6 +89,30 @@ public partial class ToDosListContent
 		{
 			await Search();
 		}
+	}
+
+	private async Task GetPaginatedResults(int pageNumber)
+	{
+		PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest(pageNumber));
+	}
+
+	private async Task GetPageNumber(int pageNumber)
+	{
+		PageResponse!.PageNumber = pageNumber;
+		await GetPaginatedResults(pageNumber);
+	}
+
+
+	private static PageRequest GetPageRequest(int pageNumber = 1)
+	{
+		var pageRequest = new PageRequest
+		{
+			PageNumber = pageNumber,
+			PageSize = 5,
+			OrderBy = "Id desc"
+        };
+
+		return pageRequest;
 	}
 
 	#endregion //Private Methods

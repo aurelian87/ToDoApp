@@ -1,6 +1,9 @@
 ﻿using System.Net.Http.Json;
 using ToDoApp.Shared.Models;
 using ToDoApp.Shared.RequestsUri;
+using System.Text.Json;
+using ToDoApp.Shared.Response;
+using ToDoApp.Shared.Requests;
 
 namespace ToDoApp.Client.Services
 {
@@ -28,6 +31,23 @@ namespace ToDoApp.Client.Services
         {
             return await _httpClient.GetFromJsonAsync<List<ToDoModel>>(requestUri) ?? new();
         }
+
+        public async Task<PageResponse<ToDoModel>> GetPaginatedResult(PageRequest pageRequest)
+        {
+            var result = new PageResponse<ToDoModel>();
+
+			var queryUri = $"{requestUri}/paginatedResult?pageNumber={pageRequest.PageNumber}&pageSize={pageRequest.PageSize}&orderBy={pageRequest.OrderBy}";
+            var response =  await _httpClient.GetAsync(queryUri);
+
+            if (response.IsSuccessStatusCode) 
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+				result = JsonSerializer.Deserialize<PageResponse<ToDoModel>>(responseString,
+                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            }
+
+			return result!;
+		}
 
         public async Task<ToDoModel> GetById(int id)
         {

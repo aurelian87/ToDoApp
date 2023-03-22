@@ -1,0 +1,35 @@
+﻿@if (TotalPages > 0)
+{
+	var pages = Enumerable.Range(1, TotalPages);
+	var visiblePages = 3;
+	var pageIndex = 0;
+
+	<nav aria-label="@AriaLabel">
+		<ul class="pagination">
+			@if (PageNumber > 1)
+			{
+				<li class="page-item">
+					<button type="button" class="page-link" @onclick="(() => ChangePage(PageNumber - 1))">Previous</button>
+				</li>
+			}
+
+			@foreach (var pageNumber in pages)
+			{
+				pageIndex++;
+				@if (pageIndex >= PageNumber - visiblePages && pageIndex <= PageNumber + visiblePages)
+				{
+					<li class="page-item @(PageNumber == pageNumber ? "active" : null)">
+						<button type="button" class="page-link" disabled="@(PageNumber == pageNumber)" @onclick="(() => ChangePage(pageNumber))">@pageNumber</button>
+					</li>
+				}
+			}
+
+			@if (ItemsCount < TotalItems)
+			{
+				<li class="page-item">
+					<button type="button" class="page-link" @onclick="(() => ChangePage(PageNumber + 1))">Next</button>
+				</li>
+			}
+		</ul>
+	</nav>
+}

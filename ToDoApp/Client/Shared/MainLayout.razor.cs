@@ -23,12 +23,11 @@ public partial class MainLayout
         LanguageSelected = await localStorage.GetItemAsync<string>("language");
 
         await base.OnInitializedAsync();
-
     }
 
     private async Task Change(ChangeEventArgs e)
     {
-        var language = e.Value.ToString();
+        var language = e.Value?.ToString();
 
         await localStorage.SetItemAsync("language", language);
 

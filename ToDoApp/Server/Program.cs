@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using EntityFrameworkCore.UseRowNumberForPaging;
 using ToDoApp.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddDbContext<ToDosAPIDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ToDosAppConnectionString")));
+
+var connectionString = builder.Configuration.GetConnectionString("ToDosAppConnectionString");
+builder.Services.AddDbContext<ToDosAPIDbContext>(options => options.UseSqlServer(connectionString, options => options.UseRowNumberForPaging()));
 
 var app = builder.Build();
 
