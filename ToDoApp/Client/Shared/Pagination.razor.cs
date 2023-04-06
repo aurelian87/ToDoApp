@@ -5,7 +5,7 @@ namespace ToDoApp.Client.Shared;
 
 public partial class Pagination
 {
-	#region Private Parameters
+	#region Parameters
 
 	[Parameter]
 	public IPageResponse? PageResponse { get; set; }
@@ -16,7 +16,7 @@ public partial class Pagination
 	[Parameter]
 	public string AriaLabel { get; set; }  = "pagination";
 
-	#endregion //Private Parameters
+	#endregion //Parameters
 
 	#region Private Properties
 
