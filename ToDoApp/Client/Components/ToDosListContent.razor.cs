@@ -17,8 +17,6 @@ public partial class ToDosListContent
 
 	private List<ToDoModel> ToDos => PageResponse?.Data ?? new();
 
-	//private List<ToDoModel> ToDosPag => PageResponse?.Data ?? new();
-
 	private int SelectedToDoId { get; set; }
 
 	private string? SearchTerm { get; set; }
@@ -36,15 +34,11 @@ public partial class ToDosListContent
 			SelectedToDoId = ToDos[0].Id;
 		}
 
-		//PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
-
 		await base.OnInitializedAsync();
 	}
 
 	private async Task LoadToDos()
 	{
-		//ToDos = await ToDoService!.GetAll();
-		//ToDos = ToDos.OrderByDescending(x => x.Id).ToList();
 		PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
 	}
 
@@ -109,7 +103,7 @@ public partial class ToDosListContent
 		{
 			PageNumber = pageNumber,
 			PageSize = 5,
-			OrderBy = "Id desc"
+			OrderBy = $"{nameof(ToDoModel.Id)} desc"
         };
 
 		return pageRequest;
