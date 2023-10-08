@@ -1,126 +1,81 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-using ToDoApp.Server.Data;
 using ToDoApp.Shared.Models;
 using ToDoApp.Shared.Requests;
 using ToDoApp.Shared.RequestsUri;
-using ToDoApp.Shared.Response;
+using ToDoApp.ApplicationLayer.Services;
 
 namespace ToDoApp.Server.Controllers
 {
-    [ApiController]
-    [Route(TodoRequestsUri.GetAll)]
-    public class ToDosController : Controller
-    {
-        private readonly ToDosAPIDbContext _context;
+	[ApiController]
+	[Route(TodoRequestsUri.GetAll)]
+	public class ToDosController : Controller
+	{
+		private readonly IToDoService _toDoService;
 
-        public ToDosController(ToDosAPIDbContext context)
-        {
-            _context = context;
-        }
+		public ToDosController(IToDoService toDoService)
+		{
+			_toDoService = toDoService;
+		}
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllToDos()
-        {
-            return Ok(await _context.ToDos.ToListAsync());
-        }
+		[HttpGet]
+		public async Task<IActionResult> GetAll()
+		{
+			return Ok(await _toDoService.GetAll());
+		}
 
-        [HttpGet]
-        [Route("paginatedResult")]
-        public async Task<IActionResult> GetPaginatedResultToDos([FromQuery] PageRequest pageRequest)
-        {
-            var result = new List<ToDoModel>();
-            if (!string.IsNullOrEmpty(pageRequest.OrderBy))
-            {
-                result = await _context.ToDos
-                              .OrderBy(pageRequest.OrderBy)
-                              .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
-                              .Take(pageRequest.PageSize)
-                              .ToListAsync();
-            }
-            else
-            {
-                result = await _context.ToDos
-                              .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
-                              .Take(pageRequest.PageSize)
-                              .ToListAsync();
-            }
+		[HttpGet]
+		[Route("paginatedResult")]
+		public async Task<IActionResult> GetPaginatedResult([FromQuery] PageRequest pageRequest)
+		{
+			return Ok(await _toDoService.GetPaginatedResult(pageRequest));
+		}
 
-            var response = new PageResponse<ToDoModel>
-            {
-                Data = result,
-                PageNumber = pageRequest.PageNumber,
-                PageSize = pageRequest.PageSize,
-                TotalItems = _context.ToDos.Count()
-            };
+		[HttpGet]
+		[Route("{id}")]
+		public async Task<IActionResult> GetById([FromRoute] int id)
+		{
+			var result = await _toDoService.GetById(id);
 
-            return Ok(response);
-        }
+			if (result is not null)
+			{
+				return Ok(result);
+			}
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetToDo([FromRoute] int id)
-        {
-            var todo = await _context.ToDos.FindAsync(id);
+			return NotFound();
+		}
 
-            if (todo != null)
-            {
-                return Ok(todo);
-            }
+		[HttpPost]
+		public async Task<IActionResult> Add(ToDoModel todo)
+		{
+			return Ok(await _toDoService.Add(todo));
+		}
 
-            return NotFound();
-        }
+		[HttpPut]
+		[Route("{id}")]
+		public async Task<IActionResult> Update([FromRoute] int id, ToDoModel todo)
+		{
+			var result = await _toDoService.Update(id, todo);
 
-        [HttpPost]
-        public async Task<IActionResult> AddToDo(ToDoModel addToDo)
-        {
-            var todo = new ToDoModel
-            {
-                Title = addToDo.Title,
-                Description = addToDo.Description,
-                DueDate = new DateTime(addToDo.DueDate.Year, addToDo.DueDate.Month, addToDo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
-            };
+			if (result is not null)
+			{
+				return Ok(result);
+			}
 
-            await _context.ToDos.AddAsync(todo);
-            await _context.SaveChangesAsync();
+			return NotFound();
+		}
 
-            return Ok(todo);
-        }
+		[HttpDelete]
+		[Route("{id}")]
+		public async Task<IActionResult> Delete([FromRoute] int id)
+		{
+			var result = await _toDoService.Delete(id);
 
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> UpdateToDo([FromRoute] int id, ToDoModel updateTodo)
-        {
-            var todo = _context.ToDos.Find(id);
+			if (result is not null)
+			{
+				return Ok(result);
+			}
 
-            if (todo != null)
-            {
-                todo.Title = updateTodo.Title;
-                todo.Description = updateTodo.Description;
-                todo.DueDate = new DateTime(updateTodo.DueDate.Year, updateTodo.DueDate.Month, updateTodo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-
-                await _context.SaveChangesAsync();
-                return Ok(todo);
-            }
-            return NotFound();
-        }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> DeleteToDo([FromRoute] int id)
-        {
-            var todo = _context.ToDos.Find(id);
-
-            if (todo != null)
-            {
-                _context.ToDos.Remove(todo);
-                await _context.SaveChangesAsync();
-
-                return Ok(todo);
-            }
-
-            return NotFound();
-        }
-    }
+			return NotFound();
+		}
+	}
 }

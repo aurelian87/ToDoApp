@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ToDoApp.Shared.Models;
-using ToDoApp.Shared.ModelsDto;
 
 namespace ToDoApp.Shared.AutoMapper
 {
@@ -8,7 +7,6 @@ namespace ToDoApp.Shared.AutoMapper
     {
         public ModelsProfile()
         {
-            CreateMap<ToDoModelDto, ToDoModel>().ReverseMap();
             CreateMap<ToDoModel, ToDoModel>().ReverseMap();
         }
     }

@@ -15,7 +15,6 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddLocalization();
 builder.Services.AddAutoMapper(typeof(ModelsProfile));
 builder.Services.AddScoped<IToDoService, ToDoService>();
-//builder.Services.AddTransient<IToDoService, ToDoService>();
 
 //await builder.Build().RunAsync();
 

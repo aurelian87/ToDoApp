@@ -1,6 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using EntityFrameworkCore.UseRowNumberForPaging;
-using ToDoApp.Server.Data;
+using Microsoft.EntityFrameworkCore;
+using ToDoApp.ApplicationLayer.Services;
+using ToDoApp.PersistenceLayer.Data;
+using ToDoApp.PersistenceLayer.Repositories;
+using ToDoApp.Shared.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,20 +14,22 @@ builder.Services.AddRazorPages();
 
 
 var connectionString = builder.Configuration.GetConnectionString("ToDosAppConnectionString");
-builder.Services.AddDbContext<ToDosAPIDbContext>(options => options.UseSqlServer(connectionString, options => options.UseRowNumberForPaging()));
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString, options => options.UseRowNumberForPaging()));
+builder.Services.AddScoped<IToDoService, ToDoService>();
+builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseWebAssemblyDebugging();
+	app.UseWebAssemblyDebugging();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
