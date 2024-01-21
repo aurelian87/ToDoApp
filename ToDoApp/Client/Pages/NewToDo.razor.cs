@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ChangeTracking;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using ToDoApp.Client.Services;
@@ -13,6 +14,7 @@ public partial class NewToDo
     #region Fields
 
     private FluentValidationValidator? _fluentValidationValidator;
+    private ToDoModel? _model;
 
     #endregion //Fields
 
@@ -28,7 +30,30 @@ public partial class NewToDo
 
     [Inject] private IMapper? Mapper { get; set; }
 
-    private ToDoModel Model { get; set; } = new();
+    //private ToDoModel Model { get; set; } = new();
+
+    private ToDoModel Model
+    {
+        get
+        {
+            if (_model is null)
+            {
+                Model = new();
+            }
+
+            return _model!;
+        }
+
+        set
+        {
+            _model = value;
+
+            if (_model is not IChangeTrackable)
+            {
+                _model = _model?.AsTrackable();
+            }
+        }
+    }
 
     private ToDoModel ModelClone { get; set; } = new();
 
@@ -44,7 +69,7 @@ public partial class NewToDo
         {
             var todo = await ToDoService!.GetById(ToDoId);
             Model = todo;
-            ModelClone = Mapper!.Map(Model, ModelClone);
+            //ModelClone = Mapper!.Map(Model, ModelClone);
         }
         else
         {
@@ -52,7 +77,7 @@ public partial class NewToDo
             {
                 DueDate = DateTime.Now
             };
-            ModelClone = Mapper!.Map(Model, ModelClone);
+            //ModelClone = Mapper!.Map(Model, ModelClone);
         }
 
         await base.OnInitializedAsync();
@@ -82,10 +107,9 @@ public partial class NewToDo
 
     private void Cancel()
     {
-        var defaultData = JsonConvert.SerializeObject(Model);
-        var newData = JsonConvert.SerializeObject(ModelClone);
+        var trackable = Model.CastToIChangeTrackable();
 
-        if (defaultData != newData)
+        if (trackable.IsChanged)
         {
             ShowCancelPopup = true;
         }
@@ -93,11 +117,23 @@ public partial class NewToDo
         {
             NavigationManager?.NavigateTo(PageRoute.Home);
         }
+
+        //var defaultData = JsonConvert.SerializeObject(Model);
+        //var newData = JsonConvert.SerializeObject(ModelClone);
+
+        //if (defaultData != newData)
+        //{
+        //    ShowCancelPopup = true;
+        //}
+        //else
+        //{
+        //    NavigationManager?.NavigateTo(PageRoute.Home);
+        //}
     }
 
     private void Reset()
     {
-        Model = ModelClone;
+        //Model = ModelClone;
         NavigationManager?.NavigateTo(PageRoute.Home);
     }
 

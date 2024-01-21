@@ -11,10 +11,12 @@
 
     <ItemGroup>
         <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+        <PackageReference Include="ChangeTracking" Version="2.2.17" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.8" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+        <PackageReference Include="Refit.HttpClientFactory" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>

@@ -3,11 +3,12 @@ using ToDoApp.Shared.Models;
 using ToDoApp.Shared.Requests;
 using ToDoApp.Shared.RequestsUri;
 using ToDoApp.ApplicationLayer.Services;
+using ToDoApp.Shared;
 
 namespace ToDoApp.Server.Controllers
 {
 	[ApiController]
-	[Route(TodoRequestsUri.GetAll)]
+	//[Route(TodoRequestsUri.GetAll)]
 	public class ToDosController : Controller
 	{
 		private readonly IToDoService _toDoService;
@@ -18,21 +19,24 @@ namespace ToDoApp.Server.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetAll()
+        [Route(ApiEndpoints.TodoEndpoints.GetAll)]
+        public async Task<IActionResult> GetAll()
 		{
 			return Ok(await _toDoService.GetAll());
 		}
 
 		[HttpGet]
-		[Route("paginatedResult")]
-		public async Task<IActionResult> GetPaginatedResult([FromQuery] PageRequest pageRequest)
+		//[Route("paginatedResult")]
+        [Route(ApiEndpoints.TodoEndpoints.GetPaginatedResult)]
+        public async Task<IActionResult> GetPaginatedResult([FromQuery] PageRequest pageRequest)
 		{
 			return Ok(await _toDoService.GetPaginatedResult(pageRequest));
 		}
 
 		[HttpGet]
-		[Route("{id}")]
-		public async Task<IActionResult> GetById([FromRoute] int id)
+		//[Route("{id}")]
+        [Route(ApiEndpoints.TodoEndpoints.GetById)]
+        public async Task<IActionResult> GetById([FromRoute] int id)
 		{
 			var result = await _toDoService.GetById(id);
 
@@ -45,14 +49,16 @@ namespace ToDoApp.Server.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Add(ToDoModel todo)
+        [Route(ApiEndpoints.TodoEndpoints.Add)]
+        public async Task<IActionResult> Add(ToDoModel todo)
 		{
 			return Ok(await _toDoService.Add(todo));
 		}
 
 		[HttpPut]
-		[Route("{id}")]
-		public async Task<IActionResult> Update([FromRoute] int id, ToDoModel todo)
+        //[Route("{id}")]
+        [Route(ApiEndpoints.TodoEndpoints.Update)]
+        public async Task<IActionResult> Update([FromRoute] int id, ToDoModel todo)
 		{
 			var result = await _toDoService.Update(id, todo);
 
@@ -65,8 +71,9 @@ namespace ToDoApp.Server.Controllers
 		}
 
 		[HttpDelete]
-		[Route("{id}")]
-		public async Task<IActionResult> Delete([FromRoute] int id)
+        //[Route("{id}")]
+        [Route(ApiEndpoints.TodoEndpoints.Delete)]
+        public async Task<IActionResult> Delete([FromRoute] int id)
 		{
 			var result = await _toDoService.Delete(id);
 

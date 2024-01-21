@@ -2,12 +2,12 @@
 {
     public class ToDoModel
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public virtual DateTime DueDate { get; set; }
     }
 }

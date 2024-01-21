@@ -89,7 +89,7 @@ namespace ToDoApp.PersistenceLayer.Repositories
 			{
 				item.Title = todo.Title;
 				item.Description = todo.Description;
-				todo.DueDate = new DateTime(todo.DueDate.Year, todo.DueDate.Month, todo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+				item.DueDate = new DateTime(todo.DueDate.Year, todo.DueDate.Month, todo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
 				await _databaseContext.SaveChangesAsync();
 				return item;

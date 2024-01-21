@@ -7,7 +7,7 @@ using ToDoApp.Shared.Requests;
 
 namespace ToDoApp.Client.Services
 {
-    public class ToDoService : IToDoService
+    public class ToDoService
     {
         #region Fields
 
