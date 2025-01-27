@@ -188,4 +188,28 @@
     <data name="er_ToDoModel_DueDateInvalid" xml:space="preserve">
 		<value>DueDate must be not in the past!</value>
 	</data>
+    <data name="prop_AuthModel_UserName" xml:space="preserve">
+		<value>Username</value>
+	</data>
+    <data name="prop_AuthModel_Password" xml:space="preserve">
+		<value>Password</value>
+	</data>
+    <data name="er_AuthModel_UserNameRequired" xml:space="preserve">
+		<value>Username is required!</value>
+	</data>
+    <data name="er_AuthModel_PasswordRequired" xml:space="preserve">
+		<value>Password is required!</value>
+	</data>
+    <data name="btn_Login" xml:space="preserve">
+		<value>Login</value>
+	</data>
+    <data name="btn_Logout" xml:space="preserve">
+		<value>Logout</value>
+	</data>
+    <data name="btn_Register" xml:space="preserve">
+		<value>Register</value>
+	</data>
+    <data name="nt_UserSettingsContent_Title" xml:space="preserve">
+		<value>Profile</value>
+	</data>
 </root>

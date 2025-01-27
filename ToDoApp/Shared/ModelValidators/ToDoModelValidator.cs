@@ -4,7 +4,7 @@ using ToDoApp.Shared.ResourceFiles;
 
 namespace ToDoApp.Shared.ModelValidators
 {
-    public class ToDoModelValidator : AbstractValidator<ToDoModel>
+    public class ToDoModelValidator : AbstractValidator<TodoModel>
     {
         public ToDoModelValidator()
         {

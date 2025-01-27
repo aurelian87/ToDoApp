@@ -1,0 +1,42 @@
+﻿@inherits ExtendedComponentBase
+
+<div class="user-settings">
+	<div class="user-settings_header"><h2 class="m-0">@Resource.nt_UserSettingsContent_Title</h2></div>
+	<div class="user-settings_container">
+		<div class="user-profile-short text-center">
+			
+			<div class="user-profile-short_row">
+				<div class="user-profile-short_image-wrapper text-center">
+					<div class="user-profile-short_image-container">
+						@if (!string.IsNullOrWhiteSpace(UserProfile.Image))
+						{
+							<img src="@UserProfile.Image" alt="@($"{UserProfile.FirstName} {UserProfile.LastName}")" />
+						}
+						else
+						{
+							<span class="user-profile-short_image-placeholder"></span>
+						}
+						
+					</div>
+				</div>
+			</div>
+			<div class="user-profile-short_row mt-2 fs-2 fw-bold">@($"{UserProfile.FirstName} {UserProfile.LastName}")</div>
+			<div class="user-profile-short_row">@UserProfile.Email</div>
+			<div class="user-profile-short_row mt-2">
+				<button type="button" class="btn btn-primary btn-edit-profile oi oi-pencil" @onclick="EditProfile" aria-label="Edit Profile"></button>
+			</div>
+		</div>
+	</div>
+	<div class="user-settings_footer">
+		<div class="user-language">
+			<label for="LanguageSelect" class="form-label visually-hidden">@Resource.LangSelectorLabel</label>
+			<select class="form-select" id="LanguageSelect" @onchange="ChangeLanguage" value="@SelectedLanguage">
+				<option value="en-US">@Resource.LangSelectorEnglish</option>
+				<option value="ro-RO">@Resource.LangSelectorRomanian</option>
+			</select>
+		</div>
+		<div class="mt-2">
+			<button type="button" class="btn btn-primary w-100" @onclick="Logout">@Resource.btn_Logout</button>
+		</div>
+	</div>
+</div>

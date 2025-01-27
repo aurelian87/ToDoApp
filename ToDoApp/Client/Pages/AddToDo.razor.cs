@@ -7,9 +7,9 @@ public partial class AddToDo
 {
     #region Fields
 
-    private ToDoModel _model;
+    private TodoModel _model;
 
-    private ToDoModel _modelClone;
+    private TodoModel _modelClone;
 
     #endregion //Fields
 
@@ -23,7 +23,7 @@ public partial class AddToDo
 
     [Inject] protected NavigationManager? NavigationManager { get; set; }
 
-    private ToDoModel Model
+    private TodoModel Model
     {
         get
         {
@@ -32,7 +32,7 @@ public partial class AddToDo
         set
         {
             _model = value;
-            _modelClone = new ToDoModel
+            _modelClone = new TodoModel
             {
                 Id = value.Id,
                 Title = value.Title,
@@ -56,7 +56,7 @@ public partial class AddToDo
         }
         else
         {
-            Model = new ToDoModel
+            Model = new TodoModel
             {
                DueDate = DateTime.Now
             };

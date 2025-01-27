@@ -4,28 +4,30 @@ using ToDoApp.Shared.Response;
 using Refit;
 using ToDoApp.Shared;
 
-namespace ToDoApp.Client.Services
+namespace ToDoApp.Client.Services;
+
+public interface ITodoService
 {
-	public interface IToDoService
-	{
-        private const string paginatedResultQuery = "?pageNumber={pageRequest.PageNumber}&pageSize={pageRequest.PageSize}&orderBy={pageRequest.OrderBy}";
+    private const string paginatedResultQuery = "?pageNumber={pageRequest.PageNumber}&pageSize={pageRequest.PageSize}&orderBy={pageRequest.OrderBy}";
 
-        [Get(ApiEndpoints.TodoEndpoints.GetAll)]
-        Task<List<ToDoModel>> GetAll();
+    [Get(ApiEndpoints.TodoEndpoints.GetAll)]
+    Task<List<TodoModel>> GetAll();
 
-        [Get($"{ApiEndpoints.TodoEndpoints.GetPaginatedResult}{paginatedResultQuery}")]
-        Task<PageResponse<ToDoModel>> GetPaginatedResult(PageRequest pageRequest);
+    [Get($"{ApiEndpoints.TodoEndpoints.GetPaginatedResult}{paginatedResultQuery}")]
+    Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest);
 
-        [Get(ApiEndpoints.TodoEndpoints.GetById)]
-        Task<ToDoModel> GetById(int id);
+    [Get(ApiEndpoints.TodoEndpoints.GetById)]
+    Task<TodoModel> GetById(int id);
 
-        [Post(ApiEndpoints.TodoEndpoints.Add)]
-        Task<ToDoModel> Add(ToDoModel todo);
+    [Post(ApiEndpoints.TodoEndpoints.Add)]
+    Task<TodoModel> Add(TodoModel todo);
 
-        [Put(ApiEndpoints.TodoEndpoints.Update)]
-        Task<ToDoModel> Update(int id, ToDoModel todo);
+    [Put(ApiEndpoints.TodoEndpoints.Update)]
+    Task<TodoModel> Update(int id, TodoModel todo);
 
-        [Delete(ApiEndpoints.TodoEndpoints.Delete)]
-        Task<ToDoModel> Delete(int id);
-    }
+    [Delete(ApiEndpoints.TodoEndpoints.Delete)]
+    Task<TodoModel> Delete(int id);
+
+	[Post(ApiEndpoints.TodoEndpoints.Save)]
+	Task<TodoModel> Save(TodoModel model);
 }

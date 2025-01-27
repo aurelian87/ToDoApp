@@ -7,7 +7,7 @@ public partial class ToDos
 {
     #region Public Properties
 
-    public static List<ToDoModel> ToDosList { get; set; } = new List<ToDoModel>();
+    public static List<TodoModel> ToDosList { get; set; } = new List<TodoModel>();
 
     #endregion //Public Properties
 
@@ -49,7 +49,7 @@ public partial class ToDos
         NavigationManager?.NavigateTo($"todo/{id}");
     }
 
-    private Task OnSelectedItem(ToDoModel item)
+    private Task OnSelectedItem(TodoModel item)
     {
         SelectedToDoId = item.Id;
         return Task.CompletedTask;

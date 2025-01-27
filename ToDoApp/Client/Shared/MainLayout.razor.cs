@@ -1,43 +1,116 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
-using System.Globalization;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using ToDoApp.Client.Components;
+using ToDoApp.Client.Services;
+using ToDoApp.Shared.Models;
 
 namespace ToDoApp.Client.Shared;
 
 public partial class MainLayout
 {
-    #region Private Properties
+	#region Fields
 
-    [Inject] private ILocalStorageService localStorage { get; set; }
+	private UserSettingsContent? _userSettingsContent;
 
-    [Inject] private NavigationManager NavigationManager { get; set; }
+	#endregion Fields
 
-    private string LanguageSelected { get; set; }
+	#region Public Methods
 
-    #endregion //Private Properties
+	public void ShowPageLoader()
+	{
+		ShowLoader = true;
+		StateHasChanged();
+	}
 
-    #region Private Methods
+	public void HidePageLoader()
+	{
+		ShowLoader = false;
+		StateHasChanged();
+	}
 
-    protected override async Task OnInitializedAsync()
-    {
-        LanguageSelected = await localStorage.GetItemAsync<string>("language");
+	public Task RefreshUserSettings(UserProfileModel model)
+	{
+		return LoadCurrentUserProfile(model);
+	}
 
-        await base.OnInitializedAsync();
-    }
+	#endregion Public Methods
 
-    private async Task Change(ChangeEventArgs e)
-    {
-        var language = e.Value?.ToString();
+	#region Private Properties
 
-        await localStorage.SetItemAsync("language", language);
+	[Inject] private IUserProfileService UserProfileService { get; set; }
 
-        LanguageSelected = await localStorage.GetItemAsync<string>("language");
+	private AuthenticationState AuthState { get; set; }
 
-        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(LanguageSelected);
-        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(LanguageSelected);
+	private bool ShowUserSettings { get; set; }
 
-        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
-    }
+	private string PageClass => ShowUserSettings ? "show-page-overlay show-user-settings" : string.Empty;
 
-    #endregion //Private Methods
+	private UserProfileModel UserProfile { get; set; } = new();
+
+	private string UserName
+	{
+		get
+		{
+			var value = string.Empty;
+
+			if (UserProfile is not null)
+			{
+				if (!string.IsNullOrWhiteSpace(UserProfile.FirstName) && !string.IsNullOrWhiteSpace(UserProfile.LastName))
+				{
+					value = $"{UserProfile.FirstName.First()}{UserProfile.LastName.First()}".Trim();
+				}
+				else if (!string.IsNullOrWhiteSpace(UserProfile.FirstName) && string.IsNullOrWhiteSpace(UserProfile.LastName))
+				{
+					value = $"{UserProfile.FirstName.First()}".Trim();
+				}
+				else if (!string.IsNullOrWhiteSpace(UserProfile.LastName))
+				{
+					value = $"{UserProfile.LastName.First()}".Trim();
+				}
+			}
+
+			return value;
+		}
+	}
+
+	private bool ShowLoader { get; set; }
+
+	#endregion //Private Properties
+
+	#region Private Methods
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadCurrentUserProfile();
+		await base.OnInitializedAsync();
+	}
+
+	private async Task LoadCurrentUserProfile(UserProfileModel? model = null)
+	{
+		ShowPageLoader();
+
+		if (model is not null)
+		{
+			UserProfile = model;
+		}
+		else
+		{
+			var result = await UserProfileService.GetCurrentUserProfile();
+			UserProfile = result?.Content ?? new();
+		}
+
+		HidePageLoader();
+	}
+
+	private void ToggleUserSettings()
+	{
+		ShowUserSettings = !ShowUserSettings;
+	}
+
+	private void CloseUserSettings()
+	{
+		ShowUserSettings = false;
+	}
+
+	#endregion //Private Methods
 }

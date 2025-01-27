@@ -1,0 +1,49 @@
+﻿@layout AuthLayout
+@attribute [AllowAnonymous]
+
+<div class="auth p-3 d-flex align-items-center justify-content-center h-100 flex-grow-1">
+	<div class="auth_container w-100">
+		@if (ShowRegister)
+		{
+			<EditForm Model="Model" OnValidSubmit="Register">
+				<FluentValidationValidator @ref="_fluentValidationValidator" />
+				<div class="form-group mb-4">
+					<label for="UserName" class="form-label">@Resource.prop_AuthModel_UserName</label>
+					<InputText id="UserName" class="form-control" @bind-Value="Model.UserName" />
+					<ValidationMessage For="(() => Model.UserName)" />
+				</div>
+				<div class="form-group mb-4">
+					<label for="Password" class="form-label">@Resource.prop_AuthModel_Password</label>
+					<div class="form-input-password">
+						<InputText id="Password" type="@(ShowPassword ? "text" : "password")" class="form-control" @bind-Value="Model.Password" />
+						<button type="button" class="button-toggle-password @(ShowPassword ? "active" : null)" aria-label="toggle password visibility" @onclick="TooglePasswordVisibility"></button>
+					</div>
+					<ValidationMessage For="(() => Model.Password)" />
+				</div>
+				<button type="submit" class="btn btn-primary w-100">@Resource.btn_Register</button>
+			</EditForm>
+			<p class="mt-2">Click <a href @onclick="GoToLogin">here</a> to login!</p>
+		}
+		else
+		{
+			<EditForm Model="Model" OnValidSubmit="Login">
+				<FluentValidationValidator @ref="_fluentValidationValidator" />
+				<div class="form-group mb-4">
+					<label for="UserName" class="form-label">@Resource.prop_AuthModel_UserName</label>
+					<InputText id="UserName" class="form-control" @bind-Value="Model.UserName" />
+					<ValidationMessage For="(() => Model.UserName)" />
+				</div>
+				<div class="form-group mb-4">
+					<label for="Password" class="form-label">@Resource.prop_AuthModel_Password</label>
+					<div class="form-input-password">
+						<InputText id="Password" type="@(ShowPassword ? "text" : "password")" class="form-control" @bind-Value="Model.Password" />
+						<button type="button" class="button-toggle-password @(ShowPassword ? "active" : null)" aria-label="toggle password visibility" @onclick="TooglePasswordVisibility"></button>
+					</div>
+					<ValidationMessage For="(() => Model.Password)" />
+				</div>
+				<button type="submit" class="btn btn-primary w-100">@Resource.btn_Login</button>
+			</EditForm>
+			<p class="mt-2">If you dont have an account, click <a href @onclick="CreateAccount">here</a> to register!</p>
+		}
+	</div>
+</div>

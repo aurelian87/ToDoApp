@@ -4,17 +4,9 @@ using ToDoApp.Shared.Response;
 
 namespace ToDoApp.Shared.Repositories;
 
-public interface IToDoRepository
+public interface ITodoRepository : IBaseRepository<TodoModel>
 {
-    Task<List<ToDoModel>> GetAll();
+	Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId);
 
-    Task<PageResponse<ToDoModel>> GetPaginatedResult(PageRequest pageRequest);
-
-    Task<ToDoModel?> GetById(int id);
-
-    Task<ToDoModel> Add(ToDoModel todo);
-
-    Task<ToDoModel?> Update(int id, ToDoModel todo);
-
-    Task<ToDoModel?> Delete(int id);
+	Task<List<TodoModel>> GetAllByUserProfileId(int userProfileId);
 }

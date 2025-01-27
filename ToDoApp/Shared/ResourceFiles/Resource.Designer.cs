@@ -97,11 +97,38 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string btn_Login {
+            get {
+                return ResourceManager.GetString("btn_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string btn_Logout {
+            get {
+                return ResourceManager.GetString("btn_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string btn_No {
             get {
                 return ResourceManager.GetString("btn_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string btn_Register {
+            get {
+                return ResourceManager.GetString("btn_Register", resourceCulture);
             }
         }
         
@@ -129,6 +156,24 @@ namespace ToDoApp.Shared.ResourceFiles {
         public static string btn_Yes {
             get {
                 return ResourceManager.GetString("btn_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required!.
+        /// </summary>
+        public static string er_AuthModel_PasswordRequired {
+            get {
+                return ResourceManager.GetString("er_AuthModel_PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username is required!.
+        /// </summary>
+        public static string er_AuthModel_UserNameRequired {
+            get {
+                return ResourceManager.GetString("er_AuthModel_UserNameRequired", resourceCulture);
             }
         }
         
@@ -250,6 +295,15 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string nt_UserSettingsContent_Title {
+            get {
+                return ResourceManager.GetString("nt_UserSettingsContent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ToDo - Add.
         /// </summary>
         public static string PageTitleAddTodo {
@@ -264,6 +318,24 @@ namespace ToDoApp.Shared.ResourceFiles {
         public static string PageTitleEditTodo {
             get {
                 return ResourceManager.GetString("PageTitleEditTodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string prop_AuthModel_Password {
+            get {
+                return ResourceManager.GetString("prop_AuthModel_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string prop_AuthModel_UserName {
+            get {
+                return ResourceManager.GetString("prop_AuthModel_UserName", resourceCulture);
             }
         }
         

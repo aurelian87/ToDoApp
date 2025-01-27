@@ -6,110 +6,54 @@ using ToDoApp.Shared.Requests;
 using ToDoApp.Shared.Response;
 using System.Linq.Dynamic.Core;
 
-namespace ToDoApp.PersistenceLayer.Repositories
+namespace ToDoApp.PersistenceLayer.Repositories;
+
+public class TodoRepository : BaseRepository<TodoModel>, ITodoRepository
 {
-	public class ToDoRepository : IToDoRepository
+
+	private readonly DatabaseContext _databaseContext;
+
+	public TodoRepository(DatabaseContext databaseContext) : base(databaseContext)
 	{
+		_databaseContext = databaseContext;
+	}
 
-		private readonly DatabaseContext _databaseContext;
+	public async Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId)
+	{
+		var dbSet = _databaseContext.Set<TodoModel>();
 
-		public ToDoRepository(DatabaseContext databaseContext)
+		// Apply the filter
+		var queryable = dbSet.AsQueryable();
+		queryable = queryable.Where(i => i.UserProfileId == userProfileId);
+
+		// Apply ordering if specified
+		if (!string.IsNullOrWhiteSpace(pageRequest.OrderBy))
 		{
-			_databaseContext = databaseContext;
+			queryable = queryable.OrderBy(pageRequest.OrderBy);
 		}
 
-		public async Task<List<ToDoModel>> GetAll()
+		// Apply pagination
+		var result = await queryable
+						  .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
+						  .Take(pageRequest.PageSize)
+						  .ToListAsync();
+
+		var response = new PageResponse<TodoModel>
 		{
-			return await _databaseContext.ToDos.ToListAsync();
-		}
+			Data = result,
+			PageNumber = pageRequest.PageNumber,
+			PageSize = pageRequest.PageSize,
+			TotalItems = await queryable.CountAsync()
+		};
 
-		public async Task<PageResponse<ToDoModel>> GetPaginatedResult(PageRequest pageRequest)
-		{
-			var result = new List<ToDoModel>();
+		return response;
+	}
 
-			if (!string.IsNullOrEmpty(pageRequest.OrderBy))
-			{
-				result = await _databaseContext.ToDos
-							  .OrderBy(pageRequest.OrderBy)
-							  .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
-							  .Take(pageRequest.PageSize)
-							  .ToListAsync();
-			}
-			else
-			{
-				result = await _databaseContext.ToDos
-							  .Skip((pageRequest.PageNumber - 1) * pageRequest.PageSize)
-							  .Take(pageRequest.PageSize)
-							  .ToListAsync();
-			}
-
-			var response = new PageResponse<ToDoModel>
-			{
-				Data = result,
-				PageNumber = pageRequest.PageNumber,
-				PageSize = pageRequest.PageSize,
-				TotalItems = _databaseContext.ToDos.Count()
-			};
-
-			return response;
-		}
-
-		public async Task<ToDoModel?> GetById(int id)
-		{
-			var todo =  await _databaseContext.ToDos.FindAsync(id);
-
-			if (todo is not null)
-			{
-				return todo;
-			}
-
-			return null;
-		}
-
-		public async Task<ToDoModel> Add(ToDoModel todo)
-		{
-			var item = new ToDoModel 
-			{
-				Title = todo.Title,
-				Description = todo.Description,
-				DueDate = new DateTime(todo.DueDate.Year, todo.DueDate.Month, todo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
-			};
-
-			await _databaseContext.ToDos.AddAsync(item);
-			await _databaseContext.SaveChangesAsync();
-
-			return item;
-		}
-
-		public async Task<ToDoModel?> Update(int id, ToDoModel todo)
-		{
-			var item = _databaseContext.ToDos.Find(id);
-
-			if (item is not null)
-			{
-				item.Title = todo.Title;
-				item.Description = todo.Description;
-				item.DueDate = new DateTime(todo.DueDate.Year, todo.DueDate.Month, todo.DueDate.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-
-				await _databaseContext.SaveChangesAsync();
-				return item;
-			}
-
-			return null;
-		}
-
-		public async Task<ToDoModel?> Delete(int id)
-		{
-			var todo = _databaseContext.ToDos.Find(id);
-
-			if (todo is not null)
-			{
-				_databaseContext.ToDos.Remove(todo);
-				await _databaseContext.SaveChangesAsync();
-				return todo;
-			}
-
-			return null;
-		}
+	public async Task<List<TodoModel>> GetAllByUserProfileId(int userProfileId)
+	{
+		var dbSet = _databaseContext.Set<TodoModel>();
+		var result = await dbSet.ToListAsync();
+		result = result.FindAll(x => x.UserProfileId == userProfileId);
+		return result;
 	}
 }

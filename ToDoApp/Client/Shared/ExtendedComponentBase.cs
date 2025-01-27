@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 
 namespace ToDoApp.Client.Shared;
 
@@ -6,13 +7,17 @@ public abstract class ExtendedComponentBase : ComponentBase
 {
     #region Private Properties
 
-    [Inject] protected NavigationManager? NavigationManager { get; set; }
+    [CascadingParameter] protected MainLayout? MainLayout { get; set; }
 
-    #endregion //Private Properties
+	[Inject] protected NavigationManager? NavigationManager { get; set; }
 
-    #region Private Methods
+	[Inject] protected ILocalStorageService LocalStorageService { get; set; }
 
-    protected void ShowConsoleMessage(string message)
+	#endregion //Private Properties
+
+	#region Private Methods
+
+	protected void ShowConsoleMessage(string message)
     {
         Console.WriteLine(message);
     }

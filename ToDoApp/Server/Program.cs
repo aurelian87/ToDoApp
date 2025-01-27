@@ -1,9 +1,19 @@
 using EntityFrameworkCore.UseRowNumberForPaging;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
+using System.Text;
 using ToDoApp.ApplicationLayer.Services;
+using ToDoApp.ApplicationLayer.Services.Contracts;
 using ToDoApp.PersistenceLayer.Data;
 using ToDoApp.PersistenceLayer.Repositories;
+using ToDoApp.Server.Extensions;
+using ToDoApp.Shared.Models;
+using ToDoApp.Shared.ModelValidators;
 using ToDoApp.Shared.Repositories;
+using ToDoApp.ApplicationLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +25,24 @@ builder.Services.AddRazorPages();
 
 var connectionString = builder.Configuration.GetConnectionString("ToDosAppConnectionString");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString, options => options.UseRowNumberForPaging()));
-builder.Services.AddScoped<IToDoService, ToDoService>();
-builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+builder.RegisterPresentation();
+
+
+//builder.Services.AddScoped<IValidator<UserProfileModel>, UserProfileModelValidator>();
+//builder.Services.AddScoped<IToDoService, ToDoService>();
+//builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+	.AddJwtBearer(options =>
+	{
+		options.TokenValidationParameters = new TokenValidationParameters
+		{
+			ValidateIssuerSigningKey = true,
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my super secret")),
+			ValidateIssuer = false,
+			ValidateAudience = false
+		};
+	});
 
 var app = builder.Build();
 
@@ -42,6 +68,8 @@ app.UseRouting();
 
 
 app.MapRazorPages();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 

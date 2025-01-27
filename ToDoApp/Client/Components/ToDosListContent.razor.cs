@@ -7,17 +7,17 @@ using ToDoApp.Shared.Response;
 
 namespace ToDoApp.Client.Components;
 
-public partial class ToDosListContent
+public partial class TodosListContent
 {
 	#region Private Properties
 
-	[Inject] private IToDoService? ToDoService { get; set; }
+	[Inject] private ITodoService? ToDoService { get; set; }
 
-	private PageResponse<ToDoModel>? PageResponse { get; set; }
+	private PageResponse<TodoModel>? PageResponse { get; set; }
 
-	private List<ToDoModel> ToDos => PageResponse?.Data ?? new();
+	private List<TodoModel> ToDos => PageResponse?.Data ?? new();
 
-	private int SelectedToDoId { get; set; }
+	private int SelectedTodoId { get; set; }
 
 	private string? SearchTerm { get; set; }
 
@@ -31,7 +31,7 @@ public partial class ToDosListContent
 
 		if (ToDos.Count > 0)
 		{
-			SelectedToDoId = ToDos[0].Id;
+			SelectedTodoId = ToDos[0].Id;
 		}
 
 		await base.OnInitializedAsync();
@@ -39,7 +39,9 @@ public partial class ToDosListContent
 
 	private async Task LoadToDos()
 	{
+		MainLayout?.ShowPageLoader();
 		PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
+		MainLayout?.HidePageLoader();
 	}
 
 	private void Add()
@@ -49,8 +51,10 @@ public partial class ToDosListContent
 
 	private async Task Delete(int id)
 	{
+		MainLayout?.ShowPageLoader();
 		await ToDoService!.Delete(id);
 		await LoadToDos();
+		MainLayout?.HidePageLoader();
 	}
 
 	private void Edit(int id)
@@ -58,9 +62,9 @@ public partial class ToDosListContent
 		NavigationManager?.NavigateTo($"{PageRoute.Todos}/{id}");
 	}
 
-	private Task OnSelectedItem(ToDoModel item)
+	private Task OnSelectedItem(TodoModel item)
 	{
-		SelectedToDoId = item.Id;
+		SelectedTodoId = item.Id;
 		return Task.CompletedTask;
 	}
 
@@ -69,7 +73,6 @@ public partial class ToDosListContent
 		if (!string.IsNullOrEmpty(SearchTerm))
 		{
 			await LoadToDos();
-			//ToDos = ToDos.Where(item => item.Title.Contains(SearchTerm)).ToList();
 		}
 		else
 		{
@@ -102,8 +105,8 @@ public partial class ToDosListContent
 		var pageRequest = new PageRequest
 		{
 			PageNumber = pageNumber,
-			PageSize = 5,
-			OrderBy = $"{nameof(ToDoModel.Id)} desc"
+			PageSize = 2,
+			OrderBy = $"{nameof(TodoModel.Id)} desc"
         };
 
 		return pageRequest;

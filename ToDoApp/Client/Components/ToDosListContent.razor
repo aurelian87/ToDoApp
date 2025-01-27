@@ -1,7 +1,7 @@
 ﻿@inherits ExtendedComponentBase
 
 <h3>@Resource.ToDoListName</h3>
-<div class="row gx-0 flex-nowrap mb-4">
+@* <div class="row gx-0 flex-nowrap mb-4">
 	<div class="col">
 		<label for="search" class="form-label visually-hidden">Search</label>
 		<input type="search" id="search" class="form-control rounded-end-0" placeholder="@Resource.SearchInputPlaceholder" @bind="SearchTerm" @onkeyup="OnEnter" />
@@ -9,42 +9,31 @@
 	<div class="col-auto">
 		<button type="submit" class="btn btn-dark rounded-start-0" @onclick="Search">@Resource.btn_Search</button>
 	</div>
-</div>
-@if (ToDos == null || ToDos.Count == 0)
-{
-	<div class="d-flex justify-content-center">
-		<div class="spinner-border" role="status">
-			<span class="visually-hidden">Loading...</span>
-		</div>
-	</div>
-}
-else
-{
-	<table class="table">
-		<thead>
-			<tr>
-				<th>@Resource.th_ToDoTitle</th>
-				<th>@Resource.th_ToDoDescription</th>
-				<th>@Resource.th_ToDoDueDate</th>
-				<th>@Resource.th_ToDoActions</th>
+</div> *@
+<table class="table">
+	<thead>
+		<tr>
+			<th>@Resource.th_ToDoTitle</th>
+			<th>@Resource.th_ToDoDescription</th>
+			<th>@Resource.th_ToDoDueDate</th>
+			<th>@Resource.th_ToDoActions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in ToDos)
+		{
+			<tr class="@(SelectedTodoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Today ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
+				<td>@item.Title</td>
+				<td>@item.Description</td>
+				<td>@item.DueDate.ToShortDateString()</td>
+				<td>
+					<button type="button" class="btn btn-dark btn-sm" @onclick="(() => Edit(item.Id))">@Resource.btn_Edit</button>
+					<button type="button" class="btn btn-danger btn-sm" @onclick="(() => Delete(item.Id))">@Resource.btn_Delete</button>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in ToDos)
-			{
-				<tr class="@(SelectedToDoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Today ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
-					<td>@item.Title</td>
-					<td>@item.Description</td>
-					<td>@item.DueDate.ToShortDateString()</td>
-					<td>
-						<button type="button" class="btn btn-dark btn-sm" @onclick="(() => Edit(item.Id))">@Resource.btn_Edit</button>
-						<button type="button" class="btn btn-danger btn-sm" @onclick="(() => Delete(item.Id))">@Resource.btn_Delete</button>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
-}
+		}
+	</tbody>
+</table>
 <div class="row gx-2 justify-content-end">
 	<div class="col-auto py-2">
 		<button type="button" class="btn btn-primary" @onclick="Add">@Resource.btn_Add</button>
@@ -52,10 +41,10 @@ else
 	@if (ToDos?.Count > 0)
 	{
 		<div class="col-auto py-2">
-			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedToDoId))">@Resource.btn_Edit</button>
+			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedTodoId))">@Resource.btn_Edit</button>
 		</div>
 		<div class="col-auto py-2">
-			<button type="button" class="btn btn-danger" @onclick="(() => Delete(SelectedToDoId))">@Resource.btn_Delete</button>
+			<button type="button" class="btn btn-danger" @onclick="(() => Delete(SelectedTodoId))">@Resource.btn_Delete</button>
 		</div>
 	}
 </div>

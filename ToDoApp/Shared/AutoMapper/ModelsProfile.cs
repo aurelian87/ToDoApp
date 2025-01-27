@@ -7,7 +7,7 @@ namespace ToDoApp.Shared.AutoMapper
     {
         public ModelsProfile()
         {
-            CreateMap<ToDoModel, ToDoModel>().ReverseMap();
+            CreateMap<TodoModel, TodoModel>().ReverseMap();
         }
     }
 }

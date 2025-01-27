@@ -1,21 +1,33 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div class="page @PageClass">
+	<PageLoader IsVisible="ShowLoader" />
+	<div class="page_overlay" @onclick="CloseUserSettings"></div>
 	<div class="sidebar">
 		<NavMenu />
 	</div>
 	<main>
 		<div class="top-row px-4">
-			<div class="d-inline-block">
-				<label for="LanguageSelect" class="form-label visually-hidden">@Resource.LangSelectorLabel</label>
-				<select class="form-select" id="LanguageSelect" @onchange="Change" value="@LanguageSelected">
-					<option value="en-US">@Resource.LangSelectorEnglish</option>
-					<option value="ro-RO">@Resource.LangSelectorRomanian</option>
-				</select>
+			<div class="row gx-1">
+				<div class="col-auto">
+					<button type="button" class="btn btn-primary btn-user-settings p-0" @onclick="ToggleUserSettings">
+						@if (!string.IsNullOrWhiteSpace(UserName))
+						{
+							<span>@UserName</span>
+						}
+						else
+						{
+							<span class="img-user-settings"></span>
+						}
+					</button>
+				</div>
 			</div>
 		</div>
 		<div class="container-fluid py-3">
-			@Body
+			<CascadingValue Value="this">
+                @Body
+            </CascadingValue>
 		</div>
 	</main>
+	<UserSettingsContent UserProfile="UserProfile" OnEditProfile="CloseUserSettings" />
 </div>

@@ -188,4 +188,28 @@
     <data name="er_ToDoModel_DueDateInvalid" xml:space="preserve">
 		<value>Data trebuie sa nu fie in trecut!</value>
 	</data>
+    <data name="prop_AuthModel_UserName" xml:space="preserve">
+		<value>Nume utilizator</value>
+	</data>
+    <data name="prop_AuthModel_Password" xml:space="preserve">
+		<value>Parola</value>
+	</data>
+    <data name="er_AuthModel_UserNameRequired" xml:space="preserve">
+		<value>Numele utilizatorului este obligatoriu!</value>
+	</data>
+    <data name="er_AuthModel_PasswordRequired" xml:space="preserve">
+		<value>Parola este obligatorie!</value>
+	</data>
+    <data name="btn_Login" xml:space="preserve">
+		<value>Conectare</value>
+	</data>
+    <data name="btn_Logout" xml:space="preserve">
+		<value>Deconectare</value>
+	</data>
+    <data name="btn_Register" xml:space="preserve">
+		<value>Inregistrare</value>
+	</data>
+    <data name="nt_UserSettingsContent_Title" xml:space="preserve">
+		<value>Profil</value>
+	</data>
 </root>
