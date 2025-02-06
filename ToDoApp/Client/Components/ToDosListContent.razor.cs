@@ -4,6 +4,7 @@ using ToDoApp.Client.Services;
 using ToDoApp.Shared.Models;
 using ToDoApp.Shared.Requests;
 using ToDoApp.Shared.Response;
+using ToDoApp.Shared.Search;
 
 namespace ToDoApp.Client.Components;
 
@@ -106,8 +107,18 @@ public partial class TodosListContent
 		{
 			PageNumber = pageNumber,
 			PageSize = 2,
-			OrderBy = $"{nameof(TodoModel.Id)} desc"
-        };
+			OrderBy = $"{nameof(TodoModel.DueDate)}",
+			SearchFilters = new()
+			{
+				new()
+				{
+					PropertyName = nameof(TodoModel.Title),
+					PropertyValue = "fi",
+					Operator = FilterOperator.StartsWith
+				}
+			},
+			FilterJunction = FilterJunction.AND
+		};
 
 		return pageRequest;
 	}

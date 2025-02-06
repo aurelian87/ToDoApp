@@ -1,4 +1,6 @@
-﻿namespace ToDoApp.Shared.Requests;
+﻿using ToDoApp.Shared.Search;
+
+namespace ToDoApp.Shared.Requests;
 
 public class PageRequest
 {
@@ -7,4 +9,8 @@ public class PageRequest
     public int PageSize { get; set; } = 10;
 
     public string? OrderBy { get; set; }
+
+    public List<SearchFilter> SearchFilters { get; set; } = new();
+
+    public FilterJunction FilterJunction { get; set; }
 }

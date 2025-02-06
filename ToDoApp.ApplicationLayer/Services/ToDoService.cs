@@ -3,6 +3,7 @@ using ToDoApp.Shared.Repositories;
 using ToDoApp.Shared.Requests;
 using ToDoApp.Shared.Response;
 using ToDoApp.ApplicationLayer.Services.Contracts;
+using ToDoApp.Shared.Search;
 
 namespace ToDoApp.ApplicationLayer.Services;
 
@@ -22,7 +23,15 @@ public class TodoService : ITodoService
 
 	public async Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId)
 	{
-		return await _toDoRepository.GetPaginatedResult(pageRequest, userProfileId);
+		var userProfileFilter = new SearchFilter 
+		{
+			PropertyName = nameof(TodoModel.UserProfileId),
+			PropertyValue = userProfileId,
+			Operator = FilterOperator.Equal
+		};
+		pageRequest.SearchFilters.Add(userProfileFilter);
+
+		return await _toDoRepository.GetPaginatedResult(pageRequest);
 	}
 
 	public async Task<TodoModel?> GetById(int id)

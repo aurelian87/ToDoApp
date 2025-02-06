@@ -10,7 +10,6 @@ namespace ToDoApp.Server.Controllers;
 
 [Authorize]
 [ApiController]
-//[Route(TodoRequestsUri.GetAll)]
 public class TodoController : Controller
 {
 	private readonly ITodoService _toDoService;
@@ -27,10 +26,9 @@ public class TodoController : Controller
 		return Ok(await _toDoService.GetAll());
 	}
 
-	[HttpGet]
-	//[Route("paginatedResult")]
+	[HttpPost]
 	[Route(ApiEndpoints.TodoEndpoints.GetPaginatedResult)]
-	public async Task<IActionResult> GetPaginatedResult([FromQuery] PageRequest pageRequest)
+	public async Task<IActionResult> GetPaginatedResult(PageRequest pageRequest)
 	{
 		var userProfileId = 0;
 
@@ -41,11 +39,19 @@ public class TodoController : Controller
 			userProfileId = int.Parse(userProfileIdString);
 		}
 
-		return Ok(await _toDoService.GetPaginatedResult(pageRequest, userProfileId));
+		try
+		{
+			var result = await _toDoService.GetPaginatedResult(pageRequest, userProfileId);
+			return Ok(result);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+			return Ok();
+		}
 	}
 
 	[HttpGet]
-	//[Route("{id}")]
 	[Route(ApiEndpoints.TodoEndpoints.GetById)]
 	public async Task<IActionResult> GetById([FromRoute] int id)
 	{
@@ -59,40 +65,7 @@ public class TodoController : Controller
 		return NotFound();
 	}
 
-	[HttpPost]
-	[Route(ApiEndpoints.TodoEndpoints.Add)]
-	public async Task<IActionResult> Add(TodoModel todo)
-	{
-		//var userProfileId = 0;
-
-		//if (User is ClaimsPrincipal && User.Identity.IsAuthenticated)
-		//{
-		//	var claimsPrincipal = User;
-		//	var userProfileIdString = claimsPrincipal.FindFirstValue("userProfileId");
-		//	userProfileId = int.Parse(userProfileIdString);
-		//}
-
-		//todo.UserProfileId = userProfileId;
-		return Ok(await _toDoService.Add(todo));
-	}
-
-	[HttpPut]
-	//[Route("{id}")]
-	[Route(ApiEndpoints.TodoEndpoints.Update)]
-	public async Task<IActionResult> Update([FromRoute] int id, TodoModel todo)
-	{
-		var result = await _toDoService.Update(id, todo);
-
-		if (result is not null)
-		{
-			return Ok(result);
-		}
-
-		return NotFound();
-	}
-
 	[HttpDelete]
-	//[Route("{id}")]
 	[Route(ApiEndpoints.TodoEndpoints.Delete)]
 	public async Task<IActionResult> Delete([FromRoute] int id)
 	{

@@ -1,36 +1,27 @@
 using EntityFrameworkCore.UseRowNumberForPaging;
-using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
 using System.Text;
-using ToDoApp.ApplicationLayer.Services;
-using ToDoApp.ApplicationLayer.Services.Contracts;
+using System.Text.Json.Serialization;
 using ToDoApp.PersistenceLayer.Data;
-using ToDoApp.PersistenceLayer.Repositories;
 using ToDoApp.Server.Extensions;
-using ToDoApp.Shared.Models;
-using ToDoApp.Shared.ModelValidators;
-using ToDoApp.Shared.Repositories;
-using ToDoApp.ApplicationLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+	});
 builder.Services.AddRazorPages();
 
 
 var connectionString = builder.Configuration.GetConnectionString("ToDosAppConnectionString");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString, options => options.UseRowNumberForPaging()));
 builder.RegisterPresentation();
-
-
-//builder.Services.AddScoped<IValidator<UserProfileModel>, UserProfileModelValidator>();
-//builder.Services.AddScoped<IToDoService, ToDoService>();
-//builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
@@ -43,6 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			ValidateAudience = false
 		};
 	});
+
 
 var app = builder.Build();
 
