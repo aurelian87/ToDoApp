@@ -8,7 +8,7 @@ public interface ITodoService
 {
 	Task<List<TodoModel>> GetAll();
 
-	Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId);
+	Task<PaginatedResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId);
 
 	Task<TodoModel?> GetById(int id);
 

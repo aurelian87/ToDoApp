@@ -29,7 +29,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateIssuerSigningKey = true,
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my super secret")),
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryLongSecureKeyThatIsAtLeast64BytesLongOrUseBase64YourVeryLongSecureKeyThatIsAtLeast64BytesLongOrUseBase64")),
 			ValidateIssuer = false,
 			ValidateAudience = false
 		};

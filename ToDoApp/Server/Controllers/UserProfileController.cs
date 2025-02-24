@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToDoApp.ApplicationLayer.Services.Contracts;
-using System.Security.Claims;
 using ToDoApp.Shared;
 using ToDoApp.Shared.Models;
+using ToDoApp.Shared.Utils;
 
 namespace ToDoApp.Server.Controllers;
 
@@ -11,56 +11,48 @@ namespace ToDoApp.Server.Controllers;
 [ApiController]
 public class UserProfileController : Controller
 {
-	private readonly IUserProfileService _userProfileService;
+    private readonly IUserProfileService _userProfileService;
 
-	public UserProfileController(IUserProfileService userProfileService)
-	{
-		_userProfileService = userProfileService;
-	}
+    public UserProfileController(IUserProfileService userProfileService)
+    {
+        _userProfileService = userProfileService;
+    }
 
-	[HttpGet]
-	[Route(ApiEndpoints.UserProfileEndpoints.GetById)]
-	public async Task<IActionResult> GetById([FromRoute] int id)
-	{
-		var result = await _userProfileService.GetById(id);
+    [HttpGet]
+    [Route(ApiEndpoints.UserProfileEndpoints.GetById)]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        var result = await _userProfileService.GetById(id);
 
-		if (result is not null)
-		{
-			return Ok(result);
-		}
+        if (result is not null)
+        {
+            return Ok(result);
+        }
 
-		return NotFound();
-	}
+        return NotFound();
+    }
 
-	[HttpGet]
-	[Route(ApiEndpoints.UserProfileEndpoints.GetCurrentUserProfile)]
-	public async Task<IActionResult> GetCurrentUserProfile()
-	{
-		var userProfileId = 0;
+    [HttpGet]
+    [Route(ApiEndpoints.UserProfileEndpoints.GetCurrentUserProfile)]
+    public async Task<IActionResult> GetCurrentUserProfile()
+    {
+        var userProfileId = User.GetUserProfileId();
+        var result = await _userProfileService.GetById(userProfileId);
 
-		if (User is ClaimsPrincipal && User.Identity.IsAuthenticated)
-		{
-			var claimsPrincipal = User;
-			var userProfileIdString = claimsPrincipal.FindFirstValue("userProfileId");
-			userProfileId = int.Parse(userProfileIdString);
-		}
+        if (result is not null)
+        {
+            return Ok(result);
+        }
 
-		var result = await _userProfileService.GetById(userProfileId);
-
-		if (result is not null)
-		{
-			return Ok(result);
-		}
-
-		return NotFound();
-	}
+        return NotFound();
+    }
 
 
-	[HttpPost]
-	[Route(ApiEndpoints.UserProfileEndpoints.Save)]
-	public async Task<IActionResult> Save(UserProfileModel userProfile)
-	{
-		var result = await _userProfileService.Save(userProfile);
-		return Ok(result);
-	}
+    [HttpPost]
+    [Route(ApiEndpoints.UserProfileEndpoints.Save)]
+    public async Task<IActionResult> Save(UserProfileModel userProfile)
+    {
+        var result = await _userProfileService.Save(userProfile);
+        return Ok(result);
+    }
 }

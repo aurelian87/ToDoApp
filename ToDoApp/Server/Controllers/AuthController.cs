@@ -77,7 +77,7 @@ public class AuthController : Controller
 			new Claim("role", "TestRole")
 		};
 
-		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my super secret"));
+		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryLongSecureKeyThatIsAtLeast64BytesLongOrUseBase64YourVeryLongSecureKeyThatIsAtLeast64BytesLongOrUseBase64"));
 		var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
 		var token = new JwtSecurityToken(

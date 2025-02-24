@@ -14,9 +14,9 @@ public partial class TodosListContent
 
 	[Inject] private ITodoService? ToDoService { get; set; }
 
-	private PageResponse<TodoModel>? PageResponse { get; set; }
+	private PaginatedResponse<TodoModel>? PaginatedResponse { get; set; }
 
-	private List<TodoModel> ToDos => PageResponse?.Data ?? new();
+	private List<TodoModel> ToDos => PaginatedResponse?.Data ?? new();
 
 	private int SelectedTodoId { get; set; }
 
@@ -41,7 +41,7 @@ public partial class TodosListContent
 	private async Task LoadToDos()
 	{
 		MainLayout?.ShowPageLoader();
-		PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
+		PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
 		MainLayout?.HidePageLoader();
 	}
 
@@ -91,12 +91,12 @@ public partial class TodosListContent
 
 	private async Task GetPaginatedResults(int pageNumber)
 	{
-		PageResponse = await ToDoService!.GetPaginatedResult(GetPageRequest(pageNumber));
+		PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest(pageNumber));
 	}
 
 	private async Task GetPageNumber(int pageNumber)
 	{
-		PageResponse!.PageNumber = pageNumber;
+		PaginatedResponse!.PageNumber = pageNumber;
 		await GetPaginatedResults(pageNumber);
 	}
 
@@ -106,18 +106,18 @@ public partial class TodosListContent
 		var pageRequest = new PageRequest
 		{
 			PageNumber = pageNumber,
-			PageSize = 2,
-			OrderBy = $"{nameof(TodoModel.DueDate)}",
-			SearchFilters = new()
-			{
-				new()
-				{
-					PropertyName = nameof(TodoModel.Title),
-					PropertyValue = "fi",
-					Operator = FilterOperator.StartsWith
-				}
-			},
-			FilterJunction = FilterJunction.AND
+			//PageSize = 2,
+			OrderBy = $"{nameof(TodoModel.DueDate)}"
+			//SearchFilters = new()
+			//{
+			//	new()
+			//	{
+			//		PropertyName = nameof(TodoModel.Title),
+			//		PropertyValue = "fi",
+			//		Operator = FilterOperator.StartsWith
+			//	}
+			//},
+			//FilterJunction = FilterJunction.AND
 		};
 
 		return pageRequest;

@@ -21,7 +21,7 @@ public class TodoService : ITodoService
 		return await _toDoRepository.GetAll();
 	}
 
-	public async Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId)
+	public async Task<PaginatedResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest, int userProfileId)
 	{
 		var userProfileFilter = new SearchFilter 
 		{

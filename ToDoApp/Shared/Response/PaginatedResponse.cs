@@ -1,7 +1,7 @@
 ﻿namespace ToDoApp.Shared.Response;
 
-    public class PageResponse<T> : IPageResponse
-    {
+public class PaginatedResponse<T> : IPaginatedResponse
+{
 	public List<T>? Data { get; set; }
 
 	public int ItemsPerPage => Data?.Count ?? 0;

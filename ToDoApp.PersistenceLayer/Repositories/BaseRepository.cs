@@ -102,7 +102,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 		}
 	}
 
-	public virtual async Task<PageResponse<T>> GetPaginatedResult(PageRequest pageRequest)
+	public virtual async Task<PaginatedResponse<T>> GetPaginatedResult(PageRequest pageRequest)
 	{
 		var dbSet = _databaseContext.Set<T>();
 
@@ -122,7 +122,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 						  .Take(pageRequest.PageSize)
 						  .ToListAsync();
 
-		var response = new PageResponse<T>
+		var response = new PaginatedResponse<T>
 		{
 			Data = result,
 			PageNumber = pageRequest.PageNumber,

@@ -12,7 +12,7 @@ public interface ITodoService
     Task<List<TodoModel>> GetAll();
 
     [Post(ApiEndpoints.TodoEndpoints.GetPaginatedResult)]
-	Task<PageResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest);
+	Task<PaginatedResponse<TodoModel>> GetPaginatedResult(PageRequest pageRequest);
 
 	[Get(ApiEndpoints.TodoEndpoints.GetById)]
     Task<TodoModel> GetById(int id);

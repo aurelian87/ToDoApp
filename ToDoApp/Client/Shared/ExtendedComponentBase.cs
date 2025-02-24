@@ -1,4 +1,5 @@
-﻿using Blazored.LocalStorage;
+﻿using AutoMapper;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 
 namespace ToDoApp.Client.Shared;
@@ -12,6 +13,8 @@ public abstract class ExtendedComponentBase : ComponentBase
 	[Inject] protected NavigationManager? NavigationManager { get; set; }
 
 	[Inject] protected ILocalStorageService LocalStorageService { get; set; }
+
+    [Inject] protected IMapper? Mapper { get; set; }
 
 	#endregion //Private Properties
 

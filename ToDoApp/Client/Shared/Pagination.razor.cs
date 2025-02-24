@@ -8,7 +8,7 @@ public partial class Pagination
 	#region Parameters
 
 	[Parameter]
-	public IPageResponse? PageResponse { get; set; }
+	public IPaginatedResponse? PageResponse { get; set; }
 
 	[Parameter]
 	public EventCallback<int> OnPageChanged { get; set; }

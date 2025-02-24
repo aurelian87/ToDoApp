@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ChangeTracking;
+﻿using ChangeTracking;
 using Microsoft.AspNetCore.Components;
 using ToDoApp.Client.Services;
 using ToDoApp.Shared.Models;
@@ -27,10 +26,6 @@ public partial class TodoDetails
 
 	[Inject] private ITodoService? ToDoService { get; set; }
 
-	[Inject] private IMapper? Mapper { get; set; }
-
-	//private ToDoModel Model { get; set; } = new();
-
 	private TodoModel Model
 	{
 		get
@@ -54,8 +49,6 @@ public partial class TodoDetails
 		}
 	}
 
-	private TodoModel ModelClone { get; set; } = new();
-
 	private bool ShowCancelPopup { get; set; }
 
 	#endregion //Private Properties 
@@ -68,7 +61,6 @@ public partial class TodoDetails
 		{
 			var todo = await ToDoService!.GetById(ToDoId);
 			Model = todo;
-			//ModelClone = Mapper!.Map(Model, ModelClone);
 		}
 		else
 		{
@@ -76,7 +68,6 @@ public partial class TodoDetails
 			{
 				DueDate = DateTime.Now
 			};
-			//ModelClone = Mapper!.Map(Model, ModelClone);
 		}
 
 		await base.OnInitializedAsync();
@@ -84,23 +75,6 @@ public partial class TodoDetails
 
 	private async Task Save()
 	{
-		//if (ToDoId == 0)
-		//{
-		//    var isValid = await _fluentValidationValidator!.ValidateAsync();
-		//    if (isValid)
-		//    {
-		//        await ToDoService!.Add(Model);
-		//    }
-		//}
-		//else
-		//{
-		//    var isValid = await _fluentValidationValidator!.ValidateAsync();
-		//    if (isValid)
-		//    {
-		//        await ToDoService!.Update(ToDoId, Model);
-		//    }
-		//}
-
 		var isValid = await _fluentValidationValidator!.ValidateAsync();
 		if (isValid)
 		{
