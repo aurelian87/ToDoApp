@@ -22,7 +22,7 @@
 	<tbody>
 		@foreach (var item in ToDos)
 		{
-			<tr class="@(SelectedTodoId == item.Id ? "active" : null) @(item.DueDate < DateTime.Today ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
+			<tr class="@(SelectedTodo == item ? "active" : null) @(item.DueDate < DateTime.Today ? "past-duedate" : null)" @onclick="(() => OnSelectedItem(item))">
 				<td>@item.Title</td>
 				<td>@item.Description</td>
 				<td>@item.DueDate.ToShortDateString()</td>
@@ -41,10 +41,10 @@
 	@if (ToDos?.Count > 0)
 	{
 		<div class="col-auto py-2">
-			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedTodoId))">@Resource.btn_Edit</button>
+			<button type="button" class="btn btn-dark" @onclick="(() => Edit(SelectedTodo.Id))">@Resource.btn_Edit</button>
 		</div>
 		<div class="col-auto py-2">
-			<button type="button" class="btn btn-danger" @onclick="(() => Delete(SelectedTodoId))">@Resource.btn_Delete</button>
+			<button type="button" class="btn btn-danger" @onclick="(() => Delete(SelectedTodo.Id))">@Resource.btn_Delete</button>
 		</div>
 	}
 </div>

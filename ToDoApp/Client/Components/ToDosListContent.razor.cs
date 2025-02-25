@@ -18,7 +18,7 @@ public partial class TodosListContent
 
 	private List<TodoModel> ToDos => PaginatedResponse?.Data ?? new();
 
-	private int SelectedTodoId { get; set; }
+	private TodoModel SelectedTodo { get; set; }
 
 	private string? SearchTerm { get; set; }
 
@@ -29,12 +29,6 @@ public partial class TodosListContent
 	protected override async Task OnInitializedAsync()
 	{
 		await LoadToDos();
-
-		if (ToDos.Count > 0)
-		{
-			SelectedTodoId = ToDos[0].Id;
-		}
-
 		await base.OnInitializedAsync();
 	}
 
@@ -42,6 +36,12 @@ public partial class TodosListContent
 	{
 		MainLayout?.ShowPageLoader();
 		PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
+
+		if (ToDos.Count > 0)
+		{
+			SelectedTodo = ToDos.FirstOrDefault() ?? new();
+		}
+
 		MainLayout?.HidePageLoader();
 	}
 
@@ -63,10 +63,9 @@ public partial class TodosListContent
 		NavigationManager?.NavigateTo($"{PageRoute.Todos}/{id}");
 	}
 
-	private Task OnSelectedItem(TodoModel item)
+	private void OnSelectedItem(TodoModel item)
 	{
-		SelectedTodoId = item.Id;
-		return Task.CompletedTask;
+        SelectedTodo = item;
 	}
 
 	private async Task Search()
@@ -106,19 +105,18 @@ public partial class TodosListContent
 		var pageRequest = new PageRequest
 		{
 			PageNumber = pageNumber,
-			//PageSize = 2,
-			OrderBy = $"{nameof(TodoModel.DueDate)}"
-			//SearchFilters = new()
-			//{
-			//	new()
-			//	{
-			//		PropertyName = nameof(TodoModel.Title),
-			//		PropertyValue = "fi",
-			//		Operator = FilterOperator.StartsWith
-			//	}
-			//},
-			//FilterJunction = FilterJunction.AND
-		};
+			OrderBy = $"{nameof(TodoModel.DueDate)}",
+			FilterJunction = FilterJunction.AND,
+            //SearchFilters = new()
+            //{
+            //	new()
+            //	{
+            //		PropertyName = nameof(TodoModel.Title),
+            //		PropertyValue = "fi",
+            //		Operator = FilterOperator.StartsWith
+            //	}
+            //}
+        };
 
 		return pageRequest;
 	}

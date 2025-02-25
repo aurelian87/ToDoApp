@@ -26,10 +26,12 @@ builder.RegisterPresentation();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
 	{
-		options.TokenValidationParameters = new TokenValidationParameters
+		var secretJwtKey = builder.Configuration.GetSection("Jwt")["Key"];
+
+        options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateIssuerSigningKey = true,
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryLongSecureKeyThatIsAtLeast64BytesLongOrUseBase64YourVeryLongSecureKeyThatIsAtLeast64BytesLongOrUseBase64")),
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretJwtKey)),
 			ValidateIssuer = false,
 			ValidateAudience = false
 		};

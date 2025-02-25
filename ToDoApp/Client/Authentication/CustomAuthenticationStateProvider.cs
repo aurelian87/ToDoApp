@@ -20,7 +20,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 
 	public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 	{
-		var token = await _localStorageService.GetItemAsync<string>("authToken");
+		var token = await _localStorageService.GetItemAsync<string>(Constants.AuthToken);
 
 		if (string.IsNullOrWhiteSpace(token))
 		{
@@ -35,7 +35,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 	{
 
 		var user = new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt"));
-		await _localStorageService.SetItemAsync("authToken", token);
+		await _localStorageService.SetItemAsync(Constants.AuthToken, token);
 		// Notify Blazor that the authentication state has changed
 		NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
 	}
@@ -44,7 +44,7 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
 	{
 		var anonymous = new ClaimsPrincipal(new ClaimsIdentity());
 		NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(anonymous)));
-		await _localStorageService.RemoveItemAsync("authToken");
+		await _localStorageService.RemoveItemAsync(Constants.AuthToken);
 		_navigationManager.NavigateTo("/", forceLoad);
 	}
 

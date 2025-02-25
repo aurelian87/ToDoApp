@@ -13,7 +13,7 @@ public class AuthTokenStore : IAuthTokenStore
 
 	public async Task<string> GetToken()
 	{
-		var token = await _localStorageService.GetItemAsync<string>("authToken");
+		var token = await _localStorageService.GetItemAsync<string>(Constants.AuthToken);
 
 		if (!string.IsNullOrWhiteSpace(token))
 		{
@@ -25,6 +25,6 @@ public class AuthTokenStore : IAuthTokenStore
 
 	public async Task RefreshToken(string token)
 	{
-		await _localStorageService.SetItemAsync("authToken", token);
+		await _localStorageService.SetItemAsync(Constants.AuthToken, token);
 	}
 }
