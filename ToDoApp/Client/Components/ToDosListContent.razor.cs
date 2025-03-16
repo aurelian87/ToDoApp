@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using ToDoApp.Client.Services;
+using ToDoApp.Client.Shared;
 using ToDoApp.Shared.Models;
 using ToDoApp.Shared.Requests;
 using ToDoApp.Shared.Response;
@@ -22,11 +23,15 @@ public partial class TodosListContent
 
 	private string? SearchTerm { get; set; }
 
-	#endregion //Private Properties
+    [CascadingParameter] protected MainLayout? MainLayout { get; set; }
 
-	#region Private Methods
+    [Inject] protected NavigationManager? NavigationManager { get; set; }
 
-	protected override async Task OnInitializedAsync()
+    #endregion //Private Properties
+
+    #region Private Methods
+
+    protected override async Task OnInitializedAsync()
 	{
 		await LoadToDos();
 	}
