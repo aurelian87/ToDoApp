@@ -31,12 +31,13 @@ public partial class TodosListContent
 
     #region Private Methods
 
-    protected override async Task OnInitializedAsync()
-	{
-		await LoadToDos();
-	}
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await LoadToDos();
+    //    await base.OnInitializedAsync();
+    //}
 
-	private async Task LoadToDos()
+    private async Task LoadToDos()
 	{
 		MainLayout?.ShowPageLoader();
 		PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
