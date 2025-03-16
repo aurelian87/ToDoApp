@@ -16,11 +16,16 @@ public abstract class ExtendedComponentBase : ComponentBase
 
     [Inject] protected IMapper? Mapper { get; set; }
 
-	#endregion //Private Properties
+    #endregion //Private Properties
 
-	#region Private Methods
+    #region Private Methods
 
-	protected void ShowConsoleMessage(string message)
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    protected void ShowConsoleMessage(string message)
     {
         Console.WriteLine(message);
     }

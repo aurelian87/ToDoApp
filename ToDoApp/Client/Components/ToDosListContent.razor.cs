@@ -29,7 +29,6 @@ public partial class TodosListContent
 	protected override async Task OnInitializedAsync()
 	{
 		await LoadToDos();
-		await base.OnInitializedAsync();
 	}
 
 	private async Task LoadToDos()
