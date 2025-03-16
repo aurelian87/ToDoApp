@@ -26,11 +26,11 @@ public partial class TodosListContent
 
 	#region Private Methods
 
-	protected override async Task OnInitializedAsync()
-	{
-		await LoadToDos();
-		await base.OnInitializedAsync();
-	}
+	//protected override async Task OnInitializedAsync()
+	//{
+	//	await LoadToDos();
+	//	await base.OnInitializedAsync();
+	//}
 
 	private async Task LoadToDos()
 	{
