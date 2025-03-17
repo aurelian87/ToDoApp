@@ -11,120 +11,116 @@ namespace ToDoApp.Client.Components;
 
 public partial class TodosListContent
 {
-	//#region Private Properties
+	#region Private Properties
 
-	//[Inject] private ITodoService? ToDoService { get; set; }
+	[Inject] private ITodoService? ToDoService { get; set; }
 
-	//private PaginatedResponse<TodoModel>? PaginatedResponse { get; set; }
+	private PaginatedResponse<TodoModel>? PaginatedResponse { get; set; }
 
-	//private List<TodoModel> ToDos => PaginatedResponse?.Data ?? new();
+	private List<TodoModel> ToDos => PaginatedResponse?.Data ?? new();
 
-	//private TodoModel SelectedTodo { get; set; }
+	private TodoModel SelectedTodo { get; set; }
 
-	//private string? SearchTerm { get; set; }
+	private string? SearchTerm { get; set; }
 
- //   [CascadingParameter] protected MainLayout? MainLayout { get; set; }
+	#endregion //Private Properties
 
- //   [Inject] protected NavigationManager? NavigationManager { get; set; }
+	#region Private Methods
 
-	//#endregion //Private Properties
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadToDos();
+		await base.OnInitializedAsync();
+	}
 
-	//#region Private Methods
+	private async Task LoadToDos()
+	{
+		MainLayout?.ShowPageLoader();
+		PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
 
-	//protected override async Task OnInitializedAsync()
-	//{
-	//	await LoadToDos();
-	//	await base.OnInitializedAsync();
-	//}
+		if (ToDos.Count > 0)
+		{
+			SelectedTodo = ToDos.FirstOrDefault() ?? new();
+		}
 
-	//private async Task LoadToDos()
-	//{
-	//	MainLayout?.ShowPageLoader();
-	//	PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest());
+		MainLayout?.HidePageLoader();
+	}
 
-	//	if (ToDos.Count > 0)
-	//	{
-	//		SelectedTodo = ToDos.FirstOrDefault() ?? new();
-	//	}
+	private void Add()
+	{
+		NavigationManager?.NavigateTo($"{PageRoute.Todos}/0");
+	}
 
-	//	MainLayout?.HidePageLoader();
-	//}
+	private async Task Delete(int id)
+	{
+		MainLayout?.ShowPageLoader();
+		await ToDoService!.Delete(id);
+		await LoadToDos();
+		MainLayout?.HidePageLoader();
+	}
 
-	//private void Add()
-	//{
-	//	NavigationManager?.NavigateTo($"{PageRoute.Todos}/0");
-	//}
+	private void Edit(int id)
+	{
+		NavigationManager?.NavigateTo($"{PageRoute.Todos}/{id}");
+	}
 
-	//private async Task Delete(int id)
-	//{
-	//	MainLayout?.ShowPageLoader();
-	//	await ToDoService!.Delete(id);
-	//	await LoadToDos();
-	//	MainLayout?.HidePageLoader();
-	//}
+	private void OnSelectedItem(TodoModel item)
+	{
+        SelectedTodo = item;
+	}
 
-	//private void Edit(int id)
-	//{
-	//	NavigationManager?.NavigateTo($"{PageRoute.Todos}/{id}");
-	//}
+	private async Task Search()
+	{
+		if (!string.IsNullOrEmpty(SearchTerm))
+		{
+			await LoadToDos();
+		}
+		else
+		{
+			await LoadToDos();
+		}
+	}
 
-	//private void OnSelectedItem(TodoModel item)
-	//{
- //       SelectedTodo = item;
-	//}
+	private async Task OnEnter(KeyboardEventArgs e)
+	{
+		if (e.Key == "Enter")
+		{
+			await Search();
+		}
+	}
 
-	//private async Task Search()
-	//{
-	//	if (!string.IsNullOrEmpty(SearchTerm))
-	//	{
-	//		await LoadToDos();
-	//	}
-	//	else
-	//	{
-	//		await LoadToDos();
-	//	}
-	//}
+	private async Task GetPaginatedResults(int pageNumber)
+	{
+		PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest(pageNumber));
+	}
 
-	//private async Task OnEnter(KeyboardEventArgs e)
-	//{
-	//	if (e.Key == "Enter")
-	//	{
-	//		await Search();
-	//	}
-	//}
-
-	//private async Task GetPaginatedResults(int pageNumber)
-	//{
-	//	PaginatedResponse = await ToDoService!.GetPaginatedResult(GetPageRequest(pageNumber));
-	//}
-
-	//private async Task GetPageNumber(int pageNumber)
-	//{
-	//	PaginatedResponse!.PageNumber = pageNumber;
-	//	await GetPaginatedResults(pageNumber);
-	//}
+	private async Task GetPageNumber(int pageNumber)
+	{
+		PaginatedResponse!.PageNumber = pageNumber;
+		await GetPaginatedResults(pageNumber);
+	}
 
 
-	//private static PageRequest GetPageRequest(int pageNumber = 1)
-	//{
-	//	var pageRequest = new PageRequest
-	//	{
-	//		PageNumber = pageNumber,
-	//		OrderBy = $"{nameof(TodoModel.DueDate)}",
-	//		FilterJunction = FilterJunction.AND,
- //           //SearchFilters = new()
- //           //{
- //           //	new()
- //           //	{
- //           //		PropertyName = nameof(TodoModel.Title),
- //           //		PropertyValue = "fi",
- //           //		Operator = FilterOperator.StartsWith
- //           //	}
- //           //}
- //       };
+	private static PageRequest GetPageRequest(int pageNumber = 1)
+	{
+		var pageRequest = new PageRequest
+		{
+			PageNumber = pageNumber,
+			OrderBy = $"{nameof(TodoModel.DueDate)}",
+			FilterJunction = FilterJunction.AND,
+            //SearchFilters = new()
+            //{
+            //	new()
+            //	{
+            //		PropertyName = nameof(TodoModel.Title),
+            //		PropertyValue = "fi",
+            //		Operator = FilterOperator.StartsWith
+            //	}
+            //}
+        };
 
-	//	return pageRequest;
-	//}
+		return pageRequest;
+	}
 
-	//#endregion //Private Methods
+	#endregion //Private Methods
 }
