@@ -5,7 +5,7 @@
 	<div class="auth_container w-100">
 		@if (ShowRegister)
 		{
-			<button type="button" class="btn btn-primary btn-sm btn-cta-auth" @onclick="GoToLogin">Go to login</button>
+			<button type="button" class="btn btn-primary btn-sm btn-cta-auth" @onclick="GoToLogin">@Resource.btn_GoToLogin</button>
 			<EditForm Model="Model" OnValidSubmit="Register">
 				<FluentValidationValidator @ref="_fluentValidationValidator" />
 				<div class="form-group mb-4">
@@ -26,7 +26,7 @@
 		}
 		else
 		{
-			<button type="button" class="btn btn-primary btn-sm btn-cta-auth" @onclick="CreateAccount">Create account</button>
+			<button type="button" class="btn btn-primary btn-sm btn-cta-auth" @onclick="CreateAccount">@Resource.btn_CreateAccount</button>
 			<EditForm Model="Model" OnValidSubmit="Login">
 				<FluentValidationValidator @ref="_fluentValidationValidator" />
 				<div class="form-group mb-4">

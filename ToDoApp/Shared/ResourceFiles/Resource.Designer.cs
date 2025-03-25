@@ -79,6 +79,15 @@ namespace ToDoApp.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create account.
+        /// </summary>
+        public static string btn_CreateAccount {
+            get {
+                return ResourceManager.GetString("btn_CreateAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string btn_Delete {
@@ -93,6 +102,15 @@ namespace ToDoApp.Shared.ResourceFiles {
         public static string btn_Edit {
             get {
                 return ResourceManager.GetString("btn_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to login.
+        /// </summary>
+        public static string btn_GoToLogin {
+            get {
+                return ResourceManager.GetString("btn_GoToLogin", resourceCulture);
             }
         }
         

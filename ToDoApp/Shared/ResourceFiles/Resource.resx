@@ -212,4 +212,10 @@
     <data name="nt_UserSettingsContent_Title" xml:space="preserve">
 		<value>Profile</value>
 	</data>
+    <data name="btn_GoToLogin" xml:space="preserve">
+		<value>Go to login</value>
+	</data>
+    <data name="btn_CreateAccount" xml:space="preserve">
+		<value>Create account</value>
+	</data>
 </root>

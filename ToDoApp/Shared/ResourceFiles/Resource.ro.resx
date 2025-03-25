@@ -201,7 +201,7 @@
 		<value>Parola este obligatorie!</value>
 	</data>
     <data name="btn_Login" xml:space="preserve">
-		<value>Conectare</value>
+		<value>Autentificare</value>
 	</data>
     <data name="btn_Logout" xml:space="preserve">
 		<value>Deconectare</value>
@@ -211,5 +211,11 @@
 	</data>
     <data name="nt_UserSettingsContent_Title" xml:space="preserve">
 		<value>Profil</value>
+	</data>
+    <data name="btn_GoToLogin" xml:space="preserve">
+		<value>Autentificare</value>
+	</data>
+    <data name="btn_CreateAccount" xml:space="preserve">
+		<value>Creare cont</value>
 	</data>
 </root>
